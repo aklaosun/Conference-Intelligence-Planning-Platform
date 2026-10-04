@@ -78,7 +78,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ccse_conference_platform',
         'USER': 'postgres',
-        'PASSWORD': 'realpassword123',
+        'PASSWORD': 'password123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
