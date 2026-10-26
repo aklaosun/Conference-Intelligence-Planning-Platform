@@ -45,3 +45,17 @@ This standalone prototype uses HTML, CSS, and JavaScript. The team's proposed ap
 
 - `index.html` — self-contained review-screen prototype.
 - `README.md` — setup, demonstration, and integration notes.
+
+
+## AI extraction and automation contribution
+
+The Gemini AI component is implemented in the Django conferences app. It supports bounded official-page
+research, structured extraction, source evidence, conflict review, candidate APIs, batch refreshes, and
+unchanged-source detection. It never automatically approves data.
+
+See [AI handoff and setup](docs/AI_HANDOFF.md), [API contract](docs/AI_API.md), and
+[validation results](VALIDATION.md). The contribution has 89 passing tests and live examples for
+Computing Frontiers and DjangoCon US. The frontend prototype above remains a separate integration task.
+
+Install Python 3.12 dependencies from requirements-ai.lock.txt and create a private .env from .env.example.
+The school-maintenance and backend-approval checklists are in docs/. Do not upload the private .env or local databases.

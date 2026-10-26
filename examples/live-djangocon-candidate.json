@@ -1,0 +1,145 @@
+{
+  "fields": {
+    "conference_name": {
+      "value": "DjangoCon US",
+      "evidence": "DjangoCon US 2026",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "organizer": {
+      "value": "Django Events Foundation North America",
+      "evidence": "Django Events Foundation North America",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "year": {
+      "value": 2026,
+      "evidence": "DjangoCon US 2026",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "start_date": {
+      "value": "2026-08-24",
+      "evidence": "August 24-28, 2026",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "end_date": {
+      "value": "2026-08-28",
+      "evidence": "August 24-28, 2026",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "start_time": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "timezone": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "location": {
+      "value": "voco Chicago Downtown",
+      "evidence": "voco Chicago Downtown",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "attendance_format": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "themes": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "target_audience": {
+      "value": [
+        "Djangonauts of all levels"
+      ],
+      "evidence": "For Djangonauts of all levels",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    }
+  },
+  "deadlines": [],
+  "registration_prices": [],
+  "warnings": [
+    "registration_prices: no supported attendance registration prices established from this page; check the official registration page.",
+    "attendance_format: not established from this page."
+  ],
+  "schema_version": "1.1",
+  "status": "needs_review",
+  "requested_url": "https://2026.djangocon.us/",
+  "extracted_at": "2026-10-26T17:37:48.749653+00:00",
+  "sources": [
+    {
+      "id": "source_1",
+      "source_url": "https://2026.djangocon.us/",
+      "title": "DjangoCon US 2026",
+      "retrieved_at": "2026-10-26T17:37:37.328608+00:00",
+      "content_sha256": "52953894fc7995be34697d91bd75357657478ee1b13aac7ef286e74b085208c2"
+    }
+  ],
+  "extraction": {
+    "provider": "GeminiProvider",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_version": "2.0",
+    "analyzed_characters": 1935,
+    "page_count": 1
+  },
+  "conflicts": [],
+  "summary": {
+    "conference_name": "DjangoCon US",
+    "year": 2026,
+    "start_date": "2026-08-24",
+    "end_date": "2026-08-28",
+    "location": "voco Chicago Downtown",
+    "attendance_format": null,
+    "source_count": 1,
+    "deadline_count": 0,
+    "registration_price_count": 0,
+    "conflict_count": 0,
+    "missing_fields": [
+      "start_time",
+      "timezone",
+      "attendance_format",
+      "themes"
+    ]
+  },
+  "changes": {
+    "previous_candidate_id": null,
+    "fields": [],
+    "deadlines_changed": false,
+    "registration_prices_changed": false
+  },
+  "monitoring": {
+    "content_fingerprint": "e5e1c0cb4107b2c6c05882744256c444054d9dbcf7950d50efbb3d79d399faf0",
+    "config": {
+      "follow_links": false,
+      "source_urls": [],
+      "max_pages": 3,
+      "expected_year": 2026,
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "2.0"
+    },
+    "previous_candidate_id": null
+  }
+}

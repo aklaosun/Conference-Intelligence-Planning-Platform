@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+*.sqlite3*
+candidate*.json
+!candidate-schema.json
+refresh-report*.json
+.pytest_cache/

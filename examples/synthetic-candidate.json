@@ -1,0 +1,143 @@
+{
+  "fields": {
+    "conference_name": {
+      "value": "Example Computing Conference",
+      "evidence": "Example Computing Conference 2027",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "organizer": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "year": {
+      "value": 2027,
+      "evidence": "Example Computing Conference 2027",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "start_date": {
+      "value": "2027-06-10",
+      "evidence": "June 10, 2027",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "end_date": {
+      "value": "2027-06-12",
+      "evidence": "June 12, 2027",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "start_time": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "timezone": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "location": {
+      "value": "Atlanta, Georgia",
+      "evidence": "Atlanta, Georgia",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "attendance_format": {
+      "value": "in_person",
+      "evidence": "In person",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    },
+    "themes": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "target_audience": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    }
+  },
+  "deadlines": [
+    {
+      "type": "abstract_submission",
+      "date": "2027-01-15",
+      "time": null,
+      "timezone": null,
+      "evidence": "January 15, 2027",
+      "source_id": "source_1",
+      "source_url": "https://example.org/conference"
+    }
+  ],
+  "registration_prices": [
+    {
+      "category": "Student",
+      "rate_type": "early_registration",
+      "amount": "100.00",
+      "currency": "USD",
+      "evidence": "Student early registration: 100.00 USD",
+      "source_id": "source_1",
+      "source_url": "https://example.org/conference"
+    }
+  ],
+  "warnings": [
+    "Synthetic fixture: not a live AI extraction."
+  ],
+  "schema_version": "1.1",
+  "status": "needs_review",
+  "requested_url": "https://example.org/conference",
+  "extracted_at": "2026-10-26T17:52:02.380926+00:00",
+  "sources": [
+    {
+      "id": "source_1",
+      "source_url": "https://example.org/conference",
+      "title": "Synthetic test fixture",
+      "retrieved_at": "2026-10-26T12:00:00+00:00",
+      "analyzed_text": "Example Computing Conference 2027\nJune 10, 2027 to June 12, 2027\nAtlanta, Georgia\nIn person\nAbstract deadline: [CROSSED OUT: January 1, 2027] January 15, 2027\nStudent early registration: 100.00 USD",
+      "content_sha256": "06178996a42b2ff4c69f9ce4bdcbcf355e8aa51554a151dec2aa3a8994f1d7d0"
+    }
+  ],
+  "extraction": {
+    "provider": "SyntheticProvider",
+    "model": "synthetic-fixture",
+    "prompt_version": "2.2",
+    "analyzed_characters": 197,
+    "page_count": 1
+  },
+  "conflicts": [],
+  "summary": {
+    "conference_name": "Example Computing Conference",
+    "year": 2027,
+    "start_date": "2027-06-10",
+    "end_date": "2027-06-12",
+    "location": "Atlanta, Georgia",
+    "attendance_format": "in_person",
+    "source_count": 1,
+    "deadline_count": 1,
+    "registration_price_count": 1,
+    "conflict_count": 0,
+    "missing_fields": [
+      "organizer",
+      "start_time",
+      "timezone",
+      "themes",
+      "target_audience"
+    ]
+  }
+}

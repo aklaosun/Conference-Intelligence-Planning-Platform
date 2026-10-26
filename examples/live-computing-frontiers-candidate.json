@@ -1,0 +1,492 @@
+{
+  "fields": {
+    "conference_name": {
+      "value": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+      "evidence": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+      "source_id": "source_1",
+      "alternatives": [
+        {
+          "value": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+          "evidence": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+          "source_id": "source_1"
+        },
+        {
+          "value": "23rd ACM International Conference on Computing Frontiers",
+          "evidence": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+          "source_id": "source_2"
+        }
+      ]
+    },
+    "organizer": {
+      "value": "ACM",
+      "evidence": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1",
+        "source_2",
+        "source_3"
+      ]
+    },
+    "year": {
+      "value": 2026,
+      "evidence": "23rd ACM International Conference on Computing Frontiers (CF'26)\nMay 19-21, 2026, Catania, Sicily, Italy",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1",
+        "source_2",
+        "source_3"
+      ]
+    },
+    "start_date": {
+      "value": "2026-05-19",
+      "evidence": "May 19-21, 2026, Catania, Sicily, Italy",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1",
+        "source_2",
+        "source_3"
+      ]
+    },
+    "end_date": {
+      "value": "2026-05-21",
+      "evidence": "May 19-21, 2026, Catania, Sicily, Italy",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1",
+        "source_2",
+        "source_3"
+      ]
+    },
+    "start_time": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "timezone": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "location": {
+      "value": "Catania, Sicily, Italy",
+      "evidence": "May 19-21, 2026, Catania, Sicily, Italy",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1",
+        "source_2",
+        "source_3"
+      ]
+    },
+    "attendance_format": {
+      "value": "in_person",
+      "evidence": "Participation is in-person only.",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1",
+        "source_2"
+      ]
+    },
+    "themes": {
+      "value": null,
+      "evidence": null,
+      "source_id": null
+    },
+    "target_audience": {
+      "value": [
+        "researchers",
+        "engineers",
+        "computer scientists"
+      ],
+      "evidence": "Computing Frontiers (CF) is an eclectic, interdisciplinary, collaborative community of researchers investigating emerging technologies in the broad field of computing",
+      "source_id": "source_1",
+      "corroborating_sources": [
+        "source_1"
+      ]
+    }
+  },
+  "deadlines": [
+    {
+      "type": "abstract_submission",
+      "date": "2026-02-01",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Abstract Submission\n1 February 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Abstract Submission\n1 February 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Abstract Submission\n1 February 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "paper_submission",
+      "date": "2026-02-01",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Paper Submission\n1 February 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Paper Submission\n1 February 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Paper Submission\n1 February 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "author_notification",
+      "date": "2026-03-09",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Author Notification\n9 March 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Author Notification\n9 March 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Author Notification\n9 March 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "camera_ready",
+      "date": "2026-04-06",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Camera Ready\n6 April 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Camera Ready\n6 April 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Camera Ready\n6 April 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "poster_submission",
+      "date": "2026-03-13",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Posters\nSubmission Deadline\n13 March 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Submission Deadline\n13 March 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Submission Deadline\n13 March 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "poster_author_notification",
+      "date": "2026-03-20",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Author Notification\n20 March 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Author Notification\n20 March 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Author Notification\n20 March 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "poster_camera_ready",
+      "date": "2026-04-06",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Poster Paper Due\n6 April 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Poster Paper Due\n6 April 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Poster Paper Due\n6 April 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "special_session_abstract_submission",
+      "date": "2026-02-15",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Special Session Abstracts\nSubmission Deadline\n15 February 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Submission Deadline\n15 February 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Submission Deadline\n15 February 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "special_session_author_notification",
+      "date": "2026-03-06",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Author Notification\n6 March 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Author Notification\n6 March 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Author Notification\n6 March 2026 (AoE)"
+        }
+      ]
+    },
+    {
+      "type": "special_session_camera_ready",
+      "date": "2026-04-06",
+      "time": null,
+      "timezone": "AoE",
+      "evidence": "Camera Ready\n6 April 2026 (AoE)",
+      "source_id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "additional_evidence": [
+        {
+          "source_id": "source_2",
+          "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+          "evidence": "Camera Ready\n6 April 2026 (AoE)"
+        },
+        {
+          "source_id": "source_3",
+          "source_url": "https://www.computingfrontiers.org/2026/program.html",
+          "evidence": "Camera Ready\n6 April 2026 (AoE)"
+        }
+      ]
+    }
+  ],
+  "registration_prices": [
+    {
+      "category": "ACM-Member",
+      "rate_type": "full_author",
+      "amount": "650.00",
+      "currency": "EUR",
+      "evidence": "FULL AUTHOR\nREGISTRATION (until\nApril 6th\n)\nACM-Member EUR 650",
+      "source_id": "source_2",
+      "source_url": "https://www.computingfrontiers.org/2026/registration.html"
+    },
+    {
+      "category": "Non-ACM Member",
+      "rate_type": "full_author",
+      "amount": "750.00",
+      "currency": "EUR",
+      "evidence": "FULL AUTHOR\nREGISTRATION (until\nApril 6th\n)\nACM-Member EUR 650\nNon-ACM Member EUR 750",
+      "source_id": "source_2",
+      "source_url": "https://www.computingfrontiers.org/2026/registration.html"
+    },
+    {
+      "category": "ACM-Member",
+      "rate_type": "participant_early",
+      "amount": "650.00",
+      "currency": "EUR",
+      "evidence": "PARTICIPANT EARLY\nREGISTRATION (until\nApril 12th\n)\nACM-Member EUR 650",
+      "source_id": "source_2",
+      "source_url": "https://www.computingfrontiers.org/2026/registration.html"
+    },
+    {
+      "category": "Non-ACM Member",
+      "rate_type": "participant_early",
+      "amount": "750.00",
+      "currency": "EUR",
+      "evidence": "PARTICIPANT EARLY\nREGISTRATION (until\nApril 12th\n)\nACM-Member EUR 650\nNon-ACM Member EUR 750",
+      "source_id": "source_2",
+      "source_url": "https://www.computingfrontiers.org/2026/registration.html"
+    },
+    {
+      "category": "Student ACM Member",
+      "rate_type": "participant_early",
+      "amount": "450.00",
+      "currency": "EUR",
+      "evidence": "PARTICIPANT EARLY\nREGISTRATION (until\nApril 12th\n)\nACM-Member EUR 650\nNon-ACM Member EUR 750\nStudent ACM Member EUR 450",
+      "source_id": "source_2",
+      "source_url": "https://www.computingfrontiers.org/2026/registration.html"
+    },
+    {
+      "category": "Student non-ACM Member",
+      "rate_type": "participant_early",
+      "amount": "500.00",
+      "currency": "EUR",
+      "evidence": "PARTICIPANT EARLY\nREGISTRATION (until\nApril 12th\n)\nACM-Member EUR 650\nNon-ACM Member EUR 750\nStudent ACM Member EUR 450\nStudent non-ACM Member EUR 500",
+      "source_id": "source_2",
+      "source_url": "https://www.computingfrontiers.org/2026/registration.html"
+    }
+  ],
+  "warnings": [
+    "No registration pricing tiers (e.g. general, student fees) were explicitly published on the page, only publication APC transition subsidies.",
+    "themes: removed because its evidence was missing, crossed out, or absent from the source.",
+    "deadlines: removed an item without usable source evidence.",
+    "Participant late registration fee is given as a formula ('Early Registration Fee + 150 Euros') and was not calculated.",
+    "conference_name: sources disagree; review every alternative before approval."
+  ],
+  "schema_version": "1.1",
+  "status": "needs_review",
+  "requested_url": "https://www.computingfrontiers.org/2026/",
+  "extracted_at": "2026-10-26T17:46:06.229178+00:00",
+  "sources": [
+    {
+      "id": "source_1",
+      "source_url": "https://www.computingfrontiers.org/2026/",
+      "title": "Computing Frontiers 2026 - Home",
+      "retrieved_at": "2026-10-26T17:45:17.434514+00:00",
+      "content_sha256": "afd29df46f178da1dfea547e3bfaf2fff6cf369681e36ea27f806c436772177a"
+    },
+    {
+      "id": "source_2",
+      "source_url": "https://www.computingfrontiers.org/2026/registration.html",
+      "title": "Computing Frontiers 2026 - Home",
+      "retrieved_at": "2026-10-26T17:45:18.132389+00:00",
+      "content_sha256": "e217e973372b9881a1f5778bf81e3abdec272f27603aa32d967322ddb0b5a26b"
+    },
+    {
+      "id": "source_3",
+      "source_url": "https://www.computingfrontiers.org/2026/program.html",
+      "title": "Computing Frontiers 2026 - Technical Program",
+      "retrieved_at": "2026-10-26T17:45:18.800011+00:00",
+      "content_sha256": "c1cd45f6110f372a0cd5097c2352a6dc954ef360a9791b061a8bfd6dbf54698c"
+    }
+  ],
+  "extraction": {
+    "provider": "GeminiProvider",
+    "model": "gemini-3.5-flash-lite",
+    "prompt_version": "2.2",
+    "analyzed_characters": 27505,
+    "page_count": 3
+  },
+  "conflicts": [
+    {
+      "kind": "field",
+      "field": "conference_name",
+      "alternatives": [
+        {
+          "value": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+          "evidence": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+          "source_id": "source_1"
+        },
+        {
+          "value": "23rd ACM International Conference on Computing Frontiers",
+          "evidence": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+          "source_id": "source_2"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "conference_name": "23rd ACM International Conference on Computing Frontiers (CF'26)",
+    "year": 2026,
+    "start_date": "2026-05-19",
+    "end_date": "2026-05-21",
+    "location": "Catania, Sicily, Italy",
+    "attendance_format": "in_person",
+    "source_count": 3,
+    "deadline_count": 10,
+    "registration_price_count": 6,
+    "conflict_count": 1,
+    "missing_fields": [
+      "start_time",
+      "timezone",
+      "themes"
+    ]
+  },
+  "changes": {
+    "previous_candidate_id": 6,
+    "fields": [
+      {
+        "field": "themes",
+        "before": [
+          "Hardware Frontiers",
+          "Distributed Systems and Networking Frontiers",
+          "System Software and Runtime Frontiers",
+          "AI for Systems and Systems for AI",
+          "Cutting-edge Developments in Computing for Society and Emerging Applications",
+          "Pushing the Boundaries of Cross-cutting Computing Challenges"
+        ],
+        "after": null
+      },
+      {
+        "field": "target_audience",
+        "before": null,
+        "after": [
+          "researchers",
+          "engineers",
+          "computer scientists"
+        ]
+      }
+    ],
+    "deadlines_changed": true,
+    "registration_prices_changed": true
+  },
+  "monitoring": {
+    "content_fingerprint": "5ee1fd06df347a2acd42cf2f427dc56fa2a8deb8aae5f0c0dde97d7d8b75134f",
+    "config": {
+      "follow_links": true,
+      "source_urls": [],
+      "max_pages": 3,
+      "expected_year": 2026,
+      "model": "gemini-3.5-flash-lite",
+      "prompt_version": "2.2",
+      "pipeline_version": "1.0"
+    },
+    "previous_candidate_id": 6
+  }
+}
