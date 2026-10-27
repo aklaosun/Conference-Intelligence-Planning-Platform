@@ -1,0 +1,12 @@
+{% extends "conferences/base.html" %}
+{% block content %}
+<h1 class="h3 mb-3">{% if edition %}Edit {{ edition }}{% else %}New edition of {{ conference.name }}{% endif %}</h1>
+<form method="post">
+  {% csrf_token %}
+  <div class="card card-body mb-3">{% include "conferences/_form_fields.html" %}</div>
+  <div class="card card-body mb-3"><h2 class="h5">Deadlines</h2>{% include "conferences/_formset.html" with formset=deadline_formset %}</div>
+  <div class="card card-body mb-3"><h2 class="h5">Registration prices</h2>{% include "conferences/_formset.html" with formset=price_formset %}</div>
+  <button class="btn btn-primary">Save</button>
+  <a class="btn btn-link" href="{% url 'conferences:conference_detail' conference.pk %}">Cancel</a>
+</form>
+{% endblock %}

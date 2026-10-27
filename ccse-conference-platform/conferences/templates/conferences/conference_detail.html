@@ -1,0 +1,58 @@
+{% extends "conferences/base.html" %}
+{% block title %}{{ conference.name }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-3">
+  <div>
+    <h1 class="h3 mb-1">{{ conference.name }}</h1>
+    <div class="text-muted">{{ conference.organizer|default:"" }}</div>
+    {% if conference.website %}<a href="{{ conference.website }}" target="_blank" rel="noopener">{{ conference.website }}</a>{% endif %}
+    <div class="mt-2">
+      {% if conference.cac_relevant %}<span class="badge text-bg-info">CAC</span>{% endif %}
+      {% if conference.cdsa_relevant %}<span class="badge text-bg-primary">CDSA</span>{% endif %}
+      {% for t in conference.themes %}<span class="badge text-bg-light border">{{ t }}</span>{% endfor %}
+    </div>
+  </div>
+  {% if can_edit %}
+  <div>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'conferences:conference_edit' conference.pk %}">Edit</a>
+    <a class="btn btn-primary btn-sm" href="{% url 'conferences:edition_create' conference.pk %}">Add edition</a>
+  </div>
+  {% endif %}
+</div>
+{% for e in editions %}
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <strong>{{ e.year }}</strong>
+    <span>
+      {% include "conferences/_status_badge.html" with value=e.information_status label=e.get_information_status_display %}
+      {% include "conferences/_status_badge.html" with value=e.verification_status label=e.get_verification_status_display %}
+      {% if can_edit %}<a class="btn btn-link btn-sm" href="{% url 'conferences:edition_edit' e.pk %}">Edit</a>{% endif %}
+    </span>
+  </div>
+  <div class="card-body">
+    <dl class="row mb-0">
+      <dt class="col-sm-3">Dates</dt><dd class="col-sm-9">{{ e.start_date|default:"TBD" }}{% if e.end_date %} to {{ e.end_date }}{% endif %}</dd>
+      <dt class="col-sm-3">Location</dt><dd class="col-sm-9">{{ e.location|default:"TBD" }}{% if e.attendance_format %} ({{ e.get_attendance_format_display }}){% endif %}</dd>
+      {% if e.source_url %}<dt class="col-sm-3">Source</dt><dd class="col-sm-9"><a href="{{ e.source_url }}" target="_blank" rel="noopener">{{ e.source_url }}</a></dd>{% endif %}
+      {% if e.last_verified_at %}<dt class="col-sm-3">Last verified</dt><dd class="col-sm-9">{{ e.last_verified_at }}</dd>{% endif %}
+    </dl>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <h3 class="h6">Deadlines</h3>
+        <ul class="list-unstyled small">
+          {% for d in e.deadlines.all %}<li>{{ d.date }} &mdash; {{ d.type }}</li>{% empty %}<li class="text-muted">None recorded</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h3 class="h6">Registration prices</h3>
+        <ul class="list-unstyled small">
+          {% for p in e.registration_prices.all %}<li>{{ p.category }} ({{ p.rate_type }}): {{ p.amount }} {{ p.currency }}</li>{% empty %}<li class="text-muted">None recorded</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% empty %}
+<p class="text-muted">No editions yet.</p>
+{% endfor %}
+{% endblock %}

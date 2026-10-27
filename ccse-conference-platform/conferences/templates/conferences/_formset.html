@@ -1,0 +1,16 @@
+{{ formset.management_form }}
+{{ formset.non_form_errors }}
+<div class="table-responsive">
+<table class="table table-sm">
+  <thead><tr>{% for field in formset.empty_form.visible_fields %}<th>{{ field.label }}</th>{% endfor %}</tr></thead>
+  <tbody>
+  {% for f in formset %}
+    <tr>
+      {% for field in f.visible_fields %}
+      <td>{% if forloop.first %}{% for h in f.hidden_fields %}{{ h }}{% endfor %}{% endif %}{{ field }}{% for err in field.errors %}<div class="text-danger small">{{ err }}</div>{% endfor %}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>

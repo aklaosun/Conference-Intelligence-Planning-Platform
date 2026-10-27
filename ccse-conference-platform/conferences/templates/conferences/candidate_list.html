@@ -1,0 +1,30 @@
+{% extends "conferences/base.html" %}
+{% block title %}Review queue{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Review queue</h1>
+<ul class="nav nav-pills mb-3">
+  {% for value, label in statuses %}
+  <li class="nav-item"><a class="nav-link {% if status == value %}active{% endif %}" href="?status={{ value }}">{{ label }}</a></li>
+  {% endfor %}
+  <li class="nav-item"><a class="nav-link {% if status == 'all' %}active{% endif %}" href="?status=all">All</a></li>
+</ul>
+<div class="table-responsive">
+<table class="table table-hover bg-white">
+  <thead><tr><th>Suggestion</th><th>Source</th><th>Submitted</th><th>Status</th><th>Reviewed by</th></tr></thead>
+  <tbody>
+  {% for c in page %}
+    <tr>
+      <td><a href="{% url 'conferences:candidate_detail' c.pk %}">{{ c }}</a></td>
+      <td class="text-truncate" style="max-width: 260px"><a href="{{ c.requested_url }}" target="_blank" rel="noopener">{{ c.requested_url }}</a></td>
+      <td>{{ c.submitted_at|date:"M j, Y g:i a" }}</td>
+      <td>{% include "conferences/_status_badge.html" with value=c.status label=c.get_status_display %}</td>
+      <td>{{ c.reviewed_by|default:"" }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5" class="text-muted">Nothing here.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% with query="status="|add:status %}{% include "conferences/_pagination.html" %}{% endwith %}
+{% endblock %}

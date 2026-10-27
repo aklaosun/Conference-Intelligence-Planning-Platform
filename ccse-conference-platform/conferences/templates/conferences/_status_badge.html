@@ -1,0 +1,1 @@
+<span class="badge {% if value == 'VERIFIED' or value == 'COMPLETE' or value == 'approved' %}text-bg-success{% elif value == 'REJECTED' or value == 'rejected' %}text-bg-danger{% elif value == 'NEEDS_REVIEW' or value == 'needs_review' or value == 'NEEDS_VERIFICATION' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">{{ label }}</span>

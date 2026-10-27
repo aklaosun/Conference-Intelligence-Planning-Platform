@@ -1,0 +1,43 @@
+{% extends "conferences/base.html" %}
+{% block title %}Conferences{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Conferences</h1>
+  <div>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'conferences:export_csv' %}?{{ query }}">Export CSV</a>
+    {% if can_edit %}<a class="btn btn-primary btn-sm" href="{% url 'conferences:conference_create' %}">Add conference</a>{% endif %}
+  </div>
+</div>
+<form method="get" class="card card-body mb-3">
+  <div class="row g-2">
+    <div class="col-md-4">{{ form.q }}</div>
+    <div class="col-md-2">{{ form.center }}</div>
+    <div class="col-md-2">{{ form.year }}</div>
+    <div class="col-md-2">{{ form.attendance_format }}</div>
+    <div class="col-md-2">{{ form.information_status }}</div>
+    <div class="col-md-2">{{ form.verification_status }}</div>
+    <div class="col-md-2 d-flex align-items-center"><div class="form-check">{{ form.upcoming_only }} <label class="form-check-label" for="{{ form.upcoming_only.id_for_label }}">Upcoming only</label></div></div>
+    <div class="col-md-2"><button class="btn btn-secondary w-100">Filter</button></div>
+    <div class="col-md-2"><a class="btn btn-link w-100" href="{% url 'conferences:conference_list' %}">Clear</a></div>
+  </div>
+</form>
+<div class="table-responsive">
+<table class="table table-hover bg-white">
+  <thead><tr><th>Name</th><th>Organizer</th><th>Centers</th><th>Themes</th><th>Editions</th></tr></thead>
+  <tbody>
+  {% for c in page %}
+    <tr>
+      <td><a href="{% url 'conferences:conference_detail' c.pk %}">{{ c.name }}</a></td>
+      <td>{{ c.organizer|default:"" }}</td>
+      <td>{% if c.cac_relevant %}<span class="badge text-bg-info">CAC</span>{% endif %} {% if c.cdsa_relevant %}<span class="badge text-bg-primary">CDSA</span>{% endif %}</td>
+      <td>{{ c.themes|join:", " }}</td>
+      <td>{{ c.edition_total }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5" class="text-muted">No conferences match.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% include "conferences/_pagination.html" %}
+{% endblock %}

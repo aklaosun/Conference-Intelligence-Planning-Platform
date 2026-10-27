@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*pg8_v=d)a7z!&=-eswctnas0p39&s$kw9!0#-xk$#76djdghw'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-only-change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -62,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'conferences.context_processors.roles',
             ],
         },
     },
@@ -76,11 +78,11 @@ WSGI_APPLICATION = 'ccse_platform.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ccse_conference_platform',
-        'USER': 'postgres',
-        'PASSWORD': 'password123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('CCSE_DB_NAME', 'ccse_conference_platform'),
+        'USER': os.environ.get('CCSE_DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('CCSE_DB_PASSWORD', ''),
+        'HOST': os.environ.get('CCSE_DB_HOST', 'localhost'),
+        'PORT': os.environ.get('CCSE_DB_PORT', '5432'),
     }
 }
 
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -130,3 +132,15 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'conferences:dashboard'
+LOGOUT_REDIRECT_URL = 'login'
+
+EXTRACTION_API_TOKEN = os.environ.get('EXTRACTION_API_TOKEN', '')
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass

@@ -1,0 +1,72 @@
+{% extends "conferences/base.html" %}
+{% block title %}Review suggestion{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-3">
+  <div>
+    <h1 class="h3 mb-1">{{ candidate }}</h1>
+    <a href="{{ candidate.requested_url }}" target="_blank" rel="noopener">{{ candidate.requested_url }}</a>
+    <div class="small text-muted">Submitted {{ candidate.submitted_at }} &middot; schema {{ candidate.schema_version }}</div>
+  </div>
+  {% include "conferences/_status_badge.html" with value=candidate.status label=candidate.get_status_display %}
+</div>
+
+{% if existing %}
+<div class="alert alert-info">This matches an existing conference: <a href="{% url 'conferences:conference_detail' existing.pk %}">{{ existing.name }}</a>. Approving adds to or updates that conference's edition for this year.</div>
+{% endif %}
+{% if warnings %}
+<div class="alert alert-warning"><strong>Extraction warnings</strong><ul class="mb-0">{% for w in warnings %}<li>{% if w.message %}{% if w.field %}<strong>{{ w.field }}</strong>: {% endif %}{{ w.message }}{% else %}{{ w }}{% endif %}</li>{% endfor %}</ul></div>
+{% endif %}
+{% if not is_open %}
+<div class="alert alert-secondary">Reviewed by {{ candidate.reviewed_by|default:"unknown" }} on {{ candidate.reviewed_at }}.{% if candidate.conference_edition %} Saved as <a href="{% url 'conferences:conference_detail' candidate.conference.pk %}">{{ candidate.conference_edition }}</a>.{% endif %}</div>
+{% endif %}
+
+<div class="card mb-3">
+  <div class="card-header">What the extraction found</div>
+  <div class="table-responsive">
+  <table class="table table-sm mb-0">
+    <thead><tr><th>Field</th><th>Value</th><th>Confidence</th><th>Evidence</th></tr></thead>
+    <tbody>
+    {% for row in field_rows %}
+      <tr>
+        <td>{{ row.name }}</td>
+        <td>{% if row.value is None %}<span class="text-muted">not found</span>{% else %}{{ row.value }}{% endif %}</td>
+        <td>{{ row.confidence|default:"" }}</td>
+        <td class="small">{{ row.evidence|default:"" }}{% if row.source_url %}<br><a href="{{ row.source_url }}" target="_blank" rel="noopener">source</a>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="row g-3 mb-3">
+  <div class="col-md-6">
+    <div class="card h-100"><div class="card-header">Deadlines</div><ul class="list-group list-group-flush">
+      {% for d in deadlines %}<li class="list-group-item small"><strong>{{ d.type }}</strong>: {{ d.date }}{% if d.evidence %}<div class="text-muted">{{ d.evidence }}</div>{% endif %}</li>{% empty %}<li class="list-group-item text-muted small">None found</li>{% endfor %}
+    </ul></div>
+  </div>
+  <div class="col-md-6">
+    <div class="card h-100"><div class="card-header">Registration prices</div><ul class="list-group list-group-flush">
+      {% for p in prices %}<li class="list-group-item small"><strong>{{ p.category }}</strong> ({{ p.rate_type }}): {{ p.amount }} {{ p.currency|default:"USD" }}{% if p.evidence %}<div class="text-muted">{{ p.evidence }}</div>{% endif %}</li>{% empty %}<li class="list-group-item text-muted small">None found</li>{% endfor %}
+    </ul></div>
+  </div>
+</div>
+
+{% if is_open and can_review %}
+<form method="post" action="{% url 'conferences:candidate_approve' candidate.pk %}" class="card card-body mb-3">
+  {% csrf_token %}
+  <h2 class="h5">Correct and approve</h2>
+  <p class="text-muted small">Fix anything that's wrong, then approve. Fields you change are saved instead of the extracted values.</p>
+  {% include "conferences/_form_fields.html" %}
+  <div><button class="btn btn-success">Approve</button></div>
+</form>
+<form method="post" action="{% url 'conferences:candidate_reject' candidate.pk %}" class="card card-body border-danger">
+  {% csrf_token %}
+  <h2 class="h5">Reject</h2>
+  <div class="form-check mb-2">{{ reject_form.confirm }} <label class="form-check-label" for="{{ reject_form.confirm.id_for_label }}">{{ reject_form.confirm.label }}</label></div>
+  <div><button class="btn btn-outline-danger">Reject</button></div>
+</form>
+{% elif is_open %}
+<div class="alert alert-light border">You can view this suggestion, but only reviewers can approve or reject it.</div>
+{% endif %}
+{% endblock %}

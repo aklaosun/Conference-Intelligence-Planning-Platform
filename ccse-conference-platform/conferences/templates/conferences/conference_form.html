@@ -1,0 +1,12 @@
+{% extends "conferences/base.html" %}
+{% block content %}
+<h1 class="h3 mb-3">{% if conference %}Edit {{ conference.name }}{% else %}Add conference{% endif %}</h1>
+<form method="post" class="card card-body">
+  {% csrf_token %}
+  {% include "conferences/_form_fields.html" %}
+  <div>
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-link" href="{% if conference %}{% url 'conferences:conference_detail' conference.pk %}{% else %}{% url 'conferences:conference_list' %}{% endif %}">Cancel</a>
+  </div>
+</form>
+{% endblock %}
