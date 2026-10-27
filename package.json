@@ -1,0 +1,7 @@
+{
+  "name": "ccse-conference-review-tests",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {"test": "node frontend-tests/review.test.cjs && node frontend-tests/live.test.mjs"},
+  "devDependencies": {"jsdom": "30.1.3"}
+}
