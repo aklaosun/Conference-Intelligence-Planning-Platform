@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Django: local AI server",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/ccse-conference-platform/manage.py",
+      "args": [
+        "runserver",
+        "--settings=ccse_platform.ai_local_settings"
+      ],
+      "django": true,
+      "cwd": "${workspaceFolder}/ccse-conference-platform",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "AI: run tests",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/ccse-conference-platform/manage.py",
+      "args": [
+        "test",
+        "conferences",
+        "--settings=ccse_platform.ai_local_settings"
+      ],
+      "cwd": "${workspaceFolder}/ccse-conference-platform",
+      "console": "integratedTerminal"
+    }
+  ]
+}

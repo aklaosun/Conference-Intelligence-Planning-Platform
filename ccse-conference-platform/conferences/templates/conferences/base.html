@@ -5,18 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}CCSE Conferences{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>a{overflow-wrap:anywhere} .card{min-width:0} .conference-table th:first-child,.conference-table td:first-child{min-width:230px} .conference-table td:not(:first-child){min-width:90px}</style>
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
   <div class="container">
     <a class="navbar-brand" href="{% url 'conferences:dashboard' %}">CCSE Conferences</a>
     {% if user.is_authenticated %}
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+    <button class="navbar-toggler" type="button" aria-label="Toggle navigation" aria-controls="nav" aria-expanded="false" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="{% url 'conferences:dashboard' %}">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'conferences:conference_list' %}">Conferences</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'conferences:candidate_list' %}">Review queue</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'conferences:review_workbench' %}">AI workbench</a></li>
         {% if user.is_staff %}<li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>{% endif %}
       </ul>
       <form method="post" action="{% url 'logout' %}" class="d-flex">

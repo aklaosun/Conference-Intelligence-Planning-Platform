@@ -28,6 +28,7 @@ from .forms import (
 )
 from .models import Conference, ConferenceEdition, Deadline, ExtractionCandidate, RegistrationPrice
 from .permissions import editor_required, reviewer_required
+from .review_validation import ReviewValidationError, ReviewStateError
 
 
 @login_required
@@ -239,13 +240,14 @@ def candidate_list(request):
 
 def _field_rows(payload):
     rows = []
+    sources = {str(s.get("id")):s for s in payload.get("sources",[]) if isinstance(s,dict)}
     for name, entry in (payload.get("fields") or {}).items():
         if isinstance(entry, dict):
             extra = {k: v for k, v in entry.items() if k not in ("value", "source_url", "evidence", "confidence")}
             rows.append({
                 "name": name,
                 "value": entry.get("value"),
-                "source_url": entry.get("source_url"),
+                "source_url": entry.get("source_url") or sources.get(str(entry.get("source_id")),{}).get("source_url"),
                 "evidence": entry.get("evidence"),
                 "confidence": entry.get("confidence"),
                 "extra": extra,
@@ -308,7 +310,11 @@ def candidate_approve(request, pk):
             }, status=400)
 
         edits = form.edited_fields()
-        edition = approve_candidate(candidate, edited_fields=edits, reviewer=_reviewer_name(request.user))
+        try:
+            edition = approve_candidate(candidate, edited_fields=edits, reviewer=_reviewer_name(request.user))
+        except (ReviewValidationError, ReviewStateError) as exc:
+            messages.error(request, str(exc))
+            return redirect("conferences:candidate_detail", pk=pk)
 
     if edits:
         messages.success(request, f"Corrected {len(edits)} field(s) and approved {edition}.")

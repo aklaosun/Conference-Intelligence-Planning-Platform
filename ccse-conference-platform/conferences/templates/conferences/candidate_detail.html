@@ -10,6 +10,7 @@
   {% include "conferences/_status_badge.html" with value=candidate.status label=candidate.get_status_display %}
 </div>
 
+<p><a class="btn btn-primary" href="{% url 'conferences:review_workbench' %}?candidate={{ candidate.pk }}">Open integrated review workbench</a></p>
 {% if existing %}
 <div class="alert alert-info">This matches an existing conference: <a href="{% url 'conferences:conference_detail' existing.pk %}">{{ existing.name }}</a>. Approving adds to or updates that conference's edition for this year.</div>
 {% endif %}
@@ -17,11 +18,11 @@
 <div class="alert alert-warning"><strong>Extraction warnings</strong><ul class="mb-0">{% for w in warnings %}<li>{% if w.message %}{% if w.field %}<strong>{{ w.field }}</strong>: {% endif %}{{ w.message }}{% else %}{{ w }}{% endif %}</li>{% endfor %}</ul></div>
 {% endif %}
 {% if not is_open %}
-<div class="alert alert-secondary">Reviewed by {{ candidate.reviewed_by|default:"unknown" }} on {{ candidate.reviewed_at }}.{% if candidate.conference_edition %} Saved as <a href="{% url 'conferences:conference_detail' candidate.conference.pk %}">{{ candidate.conference_edition }}</a>.{% endif %}</div>
+<div class="alert alert-secondary">Reviewed by {{ candidate.reviewed_by|default:"unknown" }} on {{ candidate.reviewed_at }}.{% if candidate.review_notes %}<p class="mt-2 mb-0">{{ candidate.review_notes|linebreaksbr }}</p>{% endif %}{% if candidate.conference_edition %} Saved as <a href="{% url 'conferences:conference_detail' candidate.conference.pk %}">{{ candidate.conference_edition }}</a>.{% endif %}</div>
 {% endif %}
 
 <div class="card mb-3">
-  <div class="card-header">What the extraction found</div>
+  <div class="card-header">Original AI extraction (before reviewer corrections)</div>
   <div class="table-responsive">
   <table class="table table-sm mb-0">
     <thead><tr><th>Field</th><th>Value</th><th>Confidence</th><th>Evidence</th></tr></thead>

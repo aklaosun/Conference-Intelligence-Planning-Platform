@@ -1,0 +1,13 @@
+The integrated M2 prototype is working locally: Gemini extraction -> source review and corrections
+-> approve/reject -> saved conference catalog and CSV export. The combined backend/AI suite passes
+144 tests. I also ran a real browser walkthrough with live extraction, edited-value approval,
+rejection and a CSV download.
+
+Run .\Start-M2Demo.ps1 from the project root, open http://127.0.0.1:8010/ and use the private
+local demo login created on your own computer. docs/M2_DEMO.md has installation and walkthrough steps.
+The bundle includes a captured real extraction so we can rehearse without spending API quota.
+
+This is ready for us to run through together. We still need the team to test the combined branch
+in its shared environment and decide how to host it if a shared URL is required.
+
+GitHub branch/PR: [add your link after uploading the new integrated code]

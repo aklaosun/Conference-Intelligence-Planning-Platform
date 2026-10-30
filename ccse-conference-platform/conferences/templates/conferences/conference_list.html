@@ -10,19 +10,19 @@
 </div>
 <form method="get" class="card card-body mb-3">
   <div class="row g-2">
-    <div class="col-md-4">{{ form.q }}</div>
-    <div class="col-md-2">{{ form.center }}</div>
-    <div class="col-md-2">{{ form.year }}</div>
-    <div class="col-md-2">{{ form.attendance_format }}</div>
-    <div class="col-md-2">{{ form.information_status }}</div>
-    <div class="col-md-2">{{ form.verification_status }}</div>
+    <div class="col-md-4"><label class="form-label small" for="{{ form.q.id_for_label }}">Search conferences</label>{{ form.q }}</div>
+    <div class="col-md-2"><label class="form-label small" for="{{ form.center.id_for_label }}">Center</label>{{ form.center }}</div>
+    <div class="col-md-2"><label class="form-label small" for="{{ form.year.id_for_label }}">Edition year</label>{{ form.year }}</div>
+    <div class="col-md-2"><label class="form-label small" for="{{ form.attendance_format.id_for_label }}">Attendance format</label>{{ form.attendance_format }}</div>
+    <div class="col-md-2"><label class="form-label small" for="{{ form.information_status.id_for_label }}">Information status</label>{{ form.information_status }}</div>
+    <div class="col-md-2"><label class="form-label small" for="{{ form.verification_status.id_for_label }}">Verification status</label>{{ form.verification_status }}</div>
     <div class="col-md-2 d-flex align-items-center"><div class="form-check">{{ form.upcoming_only }} <label class="form-check-label" for="{{ form.upcoming_only.id_for_label }}">Upcoming only</label></div></div>
     <div class="col-md-2"><button class="btn btn-secondary w-100">Filter</button></div>
     <div class="col-md-2"><a class="btn btn-link w-100" href="{% url 'conferences:conference_list' %}">Clear</a></div>
   </div>
 </form>
 <div class="table-responsive">
-<table class="table table-hover bg-white">
+<table class="table table-hover bg-white conference-table">
   <thead><tr><th>Name</th><th>Organizer</th><th>Centers</th><th>Themes</th><th>Editions</th></tr></thead>
   <tbody>
   {% for c in page %}

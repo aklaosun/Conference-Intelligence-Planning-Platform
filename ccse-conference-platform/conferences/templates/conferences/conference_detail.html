@@ -1,8 +1,8 @@
 {% extends "conferences/base.html" %}
 {% block title %}{{ conference.name }}{% endblock %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-start mb-3">
-  <div>
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+  <div style="flex:1 1 360px;min-width:0">
     <h1 class="h3 mb-1">{{ conference.name }}</h1>
     <div class="text-muted">{{ conference.organizer|default:"" }}</div>
     {% if conference.website %}<a href="{{ conference.website }}" target="_blank" rel="noopener">{{ conference.website }}</a>{% endif %}
@@ -13,7 +13,7 @@
     </div>
   </div>
   {% if can_edit %}
-  <div>
+  <div class="d-flex flex-wrap gap-2">
     <a class="btn btn-outline-secondary btn-sm" href="{% url 'conferences:conference_edit' conference.pk %}">Edit</a>
     <a class="btn btn-primary btn-sm" href="{% url 'conferences:edition_create' conference.pk %}">Add edition</a>
   </div>
@@ -40,13 +40,13 @@
       <div class="col-md-6">
         <h3 class="h6">Deadlines</h3>
         <ul class="list-unstyled small">
-          {% for d in e.deadlines.all %}<li>{{ d.date }} &mdash; {{ d.type }}</li>{% empty %}<li class="text-muted">None recorded</li>{% endfor %}
+          {% for d in e.deadlines.all %}<li>{{ d.date }} &mdash; {{ d.type }} {% if d.timezone %}({{ d.timezone }}){% endif %}{% if d.source_url %} · <a href="{{ d.source_url }}" target="_blank" rel="noopener">source</a>{% endif %}</li>{% empty %}<li class="text-muted">None recorded</li>{% endfor %}
         </ul>
       </div>
       <div class="col-md-6">
         <h3 class="h6">Registration prices</h3>
         <ul class="list-unstyled small">
-          {% for p in e.registration_prices.all %}<li>{{ p.category }} ({{ p.rate_type }}): {{ p.amount }} {{ p.currency }}</li>{% empty %}<li class="text-muted">None recorded</li>{% endfor %}
+          {% for p in e.registration_prices.all %}<li>{{ p.category }} ({{ p.rate_type }}): {{ p.amount }} {{ p.currency }}{% if p.source_url %} · <a href="{{ p.source_url }}" target="_blank" rel="noopener">source</a>{% endif %}</li>{% empty %}<li class="text-muted">None recorded</li>{% endfor %}
         </ul>
       </div>
     </div>

@@ -123,7 +123,7 @@ class ConferenceSearchForm(BootstrapMixin, forms.Form):
 class CandidateCorrectionForm(BootstrapMixin, forms.Form):
     conference_name = forms.CharField(max_length=255)
     organizer = forms.CharField(max_length=255, required=False)
-    year = forms.IntegerField(min_value=1900, max_value=2100)
+    year = forms.IntegerField(min_value=1900, max_value=2200)
     start_date = forms.DateField(required=False, widget=DateInput())
     end_date = forms.DateField(required=False, widget=DateInput())
     start_time = forms.TimeField(required=False, widget=TimeInput())

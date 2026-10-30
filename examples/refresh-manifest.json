@@ -1,0 +1,16 @@
+{
+  "conferences": [
+    {
+      "url": "https://www.computingfrontiers.org/2026/",
+      "year": 2026,
+      "max_pages": 3,
+      "follow_links": true
+    },
+    {
+      "url": "https://2026.djangocon.us/",
+      "year": 2026,
+      "max_pages": 1,
+      "follow_links": false
+    }
+  ]
+}

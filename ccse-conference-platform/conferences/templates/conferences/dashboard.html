@@ -1,6 +1,6 @@
 {% extends "conferences/base.html" %}
 {% block content %}
-<h1 class="h3 mb-4">Dashboard</h1>
+<div class="d-flex justify-content-between align-items-center mb-4"><div><div class="text-muted small text-uppercase">Conference intelligence · Milestone 2</div><h1 class="h3 mb-1">Conference workspace</h1><p class="text-muted mb-0">Research official websites, verify suggestions and build your conference catalog.</p></div><a class="btn btn-primary" href="{% url 'conferences:review_workbench' %}">Research a conference →</a></div>
 <div class="row g-3 mb-4">
   <div class="col-6 col-lg-3"><div class="card"><div class="card-body"><div class="text-muted small">Conferences</div><div class="fs-3">{{ conference_count }}</div></div></div></div>
   <div class="col-6 col-lg-3"><div class="card"><div class="card-body"><div class="text-muted small">Editions</div><div class="fs-3">{{ edition_count }}</div></div></div></div>

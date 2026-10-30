@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import views, review_views
 
 app_name = "conferences"
 
@@ -13,6 +13,8 @@ urlpatterns = [
     path("conferences/<int:pk>/edit/", views.conference_edit, name="conference_edit"),
     path("conferences/<int:conference_pk>/editions/new/", views.edition_create, name="edition_create"),
     path("editions/<int:pk>/edit/", views.edition_edit, name="edition_edit"),
+    path("review/workbench/", review_views.review_screen, name="review_workbench"),
+    path("api/review/candidates/<int:candidate_id>/decision/", review_views.candidate_decision, name="candidate_decision"),
     path("review/", views.candidate_list, name="candidate_list"),
     path("review/<int:pk>/", views.candidate_detail, name="candidate_detail"),
     path("review/<int:pk>/approve/", views.candidate_approve, name="candidate_approve"),
