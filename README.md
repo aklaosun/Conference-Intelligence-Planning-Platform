@@ -1,3 +1,7 @@
+**Real CAC dataset:** This branch includes the source spreadsheet under `data/`.
+Before starting a fresh demo, follow `data/README.md` to import all 35 listings.
+The expanded suite passes 160 tests. Existing reviewed records are retained.
+
 # CCSE Conference Intelligence — integrated M2 prototype
 
 An authenticated Django application connecting Gemini research, source-backed human review,

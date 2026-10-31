@@ -36,6 +36,25 @@
       {% if e.source_url %}<dt class="col-sm-3">Source</dt><dd class="col-sm-9"><a href="{{ e.source_url }}" target="_blank" rel="noopener">{{ e.source_url }}</a></dd>{% endif %}
       {% if e.last_verified_at %}<dt class="col-sm-3">Last verified</dt><dd class="col-sm-9">{{ e.last_verified_at }}</dd>{% endif %}
     </dl>
+    {% for source in e.field_sources.legacy_imports %}
+    <section class="mt-3" aria-label="Imported spreadsheet data">
+      <h3 class="h6">Imported spreadsheet data</h3>
+      <p class="small text-muted">{{ source.filename }} · {{ source.sheet }} · row {{ source.row }}. Imported source values require review.</p>
+      <dl class="row small">
+        {% if source.listed_date %}<dt class="col-sm-3">Original date</dt><dd class="col-sm-9">{{ source.listed_date }}</dd>{% endif %}
+        <dt class="col-sm-3">Edition year source</dt><dd class="col-sm-9">{{ source.year_basis }}</dd>
+        {% if source.focus_area %}<dt class="col-sm-3">Focus area</dt><dd class="col-sm-9">{{ source.focus_area }}</dd>{% endif %}
+        {% if source.category %}<dt class="col-sm-3">Category</dt><dd class="col-sm-9">{{ source.category }}</dd>{% endif %}
+        {% if source.notes %}<dt class="col-sm-3">Notes</dt><dd class="col-sm-9">{{ source.notes|linebreaksbr }}</dd>{% endif %}
+        {% if source.other_dates %}<dt class="col-sm-3">Other listed events</dt><dd class="col-sm-9">{{ source.other_dates|linebreaksbr }}</dd>{% endif %}
+      </dl>
+      {% if source.warnings %}<ul class="small text-muted">{% for warning in source.warnings %}<li>{{ warning }}</li>{% endfor %}</ul>{% endif %}
+      <details class="small mb-3"><summary>Original spreadsheet values</summary>
+        <dl class="mt-2">{% for label,value in source.raw_values.items %}<dt>{{ label }}</dt><dd>{% if value is None %}Not provided{% else %}{{ value|linebreaksbr }}{% endif %}</dd>{% endfor %}</dl>
+        <p class="text-muted">Source SHA256 {{ source.sha256 }}</p>
+      </details>
+    </section>
+    {% endfor %}
     <div class="row mt-3">
       <div class="col-md-6">
         <h3 class="h6">Deadlines</h3>

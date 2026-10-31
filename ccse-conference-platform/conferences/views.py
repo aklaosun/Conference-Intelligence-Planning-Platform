@@ -205,10 +205,13 @@ def export_conferences_csv(request):
     writer.writerow([
         "Conference", "Organizer", "Website", "CAC", "CDSA", "Themes", "Year", "Start date",
         "End date", "Location", "Format", "Information status", "Verification status",
-        "Earliest deadline", "Source URL",
+        "Earliest deadline", "Source URL", "Spreadsheet file", "Worksheet", "Source row",
+        "Original listed date", "Focus area", "Category", "Spreadsheet notes", "Other listed events", "Import warnings",
     ])
     for e in editions:
         c = e.conference
+        sources = e.field_sources.get("legacy_imports", [])
+        source = sources[-1] if sources else {}
         writer.writerow([
             c.name, c.organizer or "", c.website or "", "Yes" if c.cac_relevant else "No",
             "Yes" if c.cdsa_relevant else "No", "; ".join(c.themes or []), e.year,
@@ -216,6 +219,9 @@ def export_conferences_csv(request):
             e.get_attendance_format_display() if e.attendance_format else "",
             e.get_information_status_display(), e.get_verification_status_display(),
             e.next_deadline or "", e.source_url or "",
+            source.get("filename", ""), source.get("sheet", ""), source.get("row", ""),
+            source.get("listed_date") or "", source.get("focus_area", ""), source.get("category", ""),
+            source.get("notes", ""), source.get("other_dates", ""), "; ".join(source.get("warnings", [])),
         ])
     return response
 
