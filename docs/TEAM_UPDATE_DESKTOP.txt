@@ -1,0 +1,12 @@
+Team — I’ve updated the prototype with an Electron/React desktop interface and the real 35-conference CAC spreadsheet dataset. It now includes search/filtering, source provenance, AI evidence review, planning statuses and owners, itemized estimated/actual budgets, evaluation settings, outcomes/follow-ups, and CSV reports.
+
+For now, we are using separate local demos. Each computer has its own saved data; edits are not synchronized.
+
+To run the Windows demo:
+1. Download the installer or portable executable from the release files I share.
+2. Run it and wait for the local workspace to initialize. Python/Node/PostgreSQL are not needed.
+3. Start in Conference catalog, open a conference, inspect its spreadsheet source, then open Plan this edition.
+4. Save a plan/budget, try Outcomes & follow-up, and export a planning CSV from Reports & outcomes.
+5. To try live AI, use Live AI settings with your own Google AI Studio key. Existing real saved suggestions can be reviewed without a key. Never share or upload API keys.
+
+The full walkthrough is in docs/DESKTOP_AND_SHARED_ACCESS.md. Sponsor criteria/weights still need confirmation, and the remaining project-plan items are listed in docs/REQUIREMENTS_STATUS.md. This is ready for a prototype walkthrough once we verify the release on each person’s computer; it is not final sponsor acceptance.

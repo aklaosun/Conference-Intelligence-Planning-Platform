@@ -1,3 +1,11 @@
+# CCSE Conference Workspace — desktop prototype
+
+The updated Electron/React local demo bundles Django and the real 35-conference CAC dataset. Each computer has its own saved data. Start with [the desktop walkthrough](docs/DESKTOP_AND_SHARED_ACCESS.md) and [the project-plan status](docs/REQUIREMENTS_STATUS.md). Windows release executables are distributed separately from source. `Build-Desktop.ps1` rebuilds them.
+
+The original source-project workflow below remains available.
+
+---
+
 # CCSE Conference Intelligence — integrated M2 prototype
 
 An authenticated Django application connecting Gemini research, source-backed human review,

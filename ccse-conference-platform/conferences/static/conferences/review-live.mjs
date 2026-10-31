@@ -92,7 +92,8 @@ window.addEventListener("ccse-review-decision", event => {
       : "Suggestion rejected. The official conference catalog was not changed.");
     if (result.conference_url) {
       const link = document.createElement("a");
-      link.href = result.conference_url;
+      link.href = document.body.dataset.embedded === "true" ? "/app/#/conference/" + result.conference_id : result.conference_url;
+      if (document.body.dataset.embedded === "true") link.target = "_top";
       link.textContent = "View saved conference →";
       link.className = "saved-conference-link";
       const wrap = document.createElement("p");
@@ -106,3 +107,7 @@ window.addEventListener("ccse-review-decision", event => {
 // Restore the logged-in session and queue as soon as the workbench opens.
 document.getElementById("connect").click();
 
+
+const preset = new URL(location.href).searchParams;
+if (preset.get("url")) document.getElementById("conferenceUrl").value = preset.get("url");
+if (preset.get("year")) document.getElementById("extractYear").value = preset.get("year");

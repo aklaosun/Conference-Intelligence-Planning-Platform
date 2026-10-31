@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from .models import ExtractionCandidate
 from .permissions import reviewer_required
 from .approval_service import approve_candidate, reject_candidate
@@ -13,8 +14,9 @@ from .review_validation import validate_packet, ReviewStateError, ReviewValidati
 @login_required
 @permission_required("conferences.view_extractioncandidate", raise_exception=True)
 @require_GET
+@xframe_options_sameorigin
 def review_screen(request):
-    return render(request,"conferences/review.html")
+    return render(request,"conferences/review.html", {"embedded":request.GET.get("embedded")=="1"})
 
 @require_POST
 @reviewer_required
