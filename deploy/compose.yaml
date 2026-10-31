@@ -1,0 +1,49 @@
+services:
+  database:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ccse
+      POSTGRES_USER: ccse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a private PostgreSQL password}
+    volumes:
+      - ccse_database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ccse -d ccse"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    environment:
+      DJANGO_SETTINGS_MODULE: ccse_platform.production_settings
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set a private Django secret of at least 50 characters}
+      PUBLIC_BASE_URL: https://${WORKSPACE_DOMAIN:?Set your workspace DNS hostname}
+      DATABASE_URL: postgresql://ccse:${POSTGRES_PASSWORD}@database:5432/ccse
+      DATABASE_SSL_REQUIRE: "0"
+      DJANGO_TRUST_PROXY: "1"
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash-lite}
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+  https:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      WORKSPACE_DOMAIN: ${WORKSPACE_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ccse_https_data:/data
+      - ccse_https_config:/config
+    depends_on: [app]
+    restart: unless-stopped
+volumes:
+  ccse_database:
+  ccse_https_data:
+  ccse_https_config:

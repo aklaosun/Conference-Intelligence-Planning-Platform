@@ -42,6 +42,16 @@ def approve_candidate(candidate, edited_fields=None, reviewer="", *, decision=No
         # Case-insensitive matching avoids duplicating a conference over capitalization corrections.
         conference = Conference.objects.filter(name__iexact=values["conference_name"]).first()
         if conference is None:
+            # Spreadsheet labels can differ from official titles. Match an exact
+            # canonical website identity; ambiguity requires manual cleanup.
+            from .cac_import import website_identity
+            identity = website_identity(locked.requested_url)
+            matches = [c for c in Conference.objects.exclude(website="")
+                       if identity and website_identity(c.website) == identity]
+            if len(matches) > 1:
+                raise ReviewValidationError("Multiple catalog conferences use this website. Resolve the duplicates before approval.")
+            conference = matches[0] if matches else None
+        if conference is None:
             conference = Conference.objects.create(name=values["conference_name"])
         conference = Conference.objects.select_for_update().get(pk=conference.pk)
         sources = source_map(payload)

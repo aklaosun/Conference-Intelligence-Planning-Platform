@@ -128,3 +128,7 @@ class ExtractionCandidate(models.Model):
     def __str__(self):
         name = self.raw_payload.get("fields", {}).get("conference_name", {}).get("value", "Unknown")
         return f"Candidate: {name} ({self.status})"
+
+# Domain modules keep the core conference and extraction contracts stable.
+from .planning_models import (PlanningStage,ConferencePlan,BudgetLine,OutcomeReport,SelectionCriterion,CriterionRating,ActivityEvent,ReportSubscription,ReportDelivery)
+from .access_models import AccessInvitation,LoginThrottle

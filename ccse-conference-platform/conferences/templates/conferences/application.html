@@ -1,0 +1,6 @@
+{% load static %}<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c1823"><title>CCSE Conference Workspace</title>
+{% for css in workspace_css %}<link rel="stylesheet" href="{% static css %}">{% endfor %}
+</head><body><div id="root"><noscript>This workspace requires JavaScript. You can use the <a href="/conferences/">conference catalog</a> without the desktop interface.</noscript></div>
+{% if workspace_js %}<script type="module" src="{% static workspace_js %}"></script>{% else %}<p style="padding:40px;font:16px system-ui">The workspace interface needs its build files. Run the client build, or open the <a href="/conferences/">conference catalog</a>.</p>{% endif %}
+</body></html>
