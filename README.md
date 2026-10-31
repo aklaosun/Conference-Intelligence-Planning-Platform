@@ -1,47 +1,35 @@
-# CCSE Conference Platform — Frontend Prototype
+# CCSE Conference Workspace — desktop prototype
 
-**Frontend / UX Lead:** Jonathan Cruz  
-**Milestone:** Milestone 1
+The updated Electron/React local demo bundles Django and the real 35-conference CAC dataset. Each computer has its own saved data. Start with [the desktop walkthrough](docs/DESKTOP_AND_SHARED_ACCESS.md) and [the project-plan status](docs/REQUIREMENTS_STATUS.md). Windows release executables are distributed separately from source. `Build-Desktop.ps1` rebuilds them.
 
-This repository contains a frontend prototype for the CCSE Conference Intelligence and Planning Platform. It demonstrates how an authorized reviewer could inspect AI-extracted conference information before approving it for a yearly conference edition.
+The original source-project workflow below remains available.
 
-## Features
+---
 
-- Review conference name, year, start and end dates, location, and attendance format.
-- View a suggested deadline and edit its type and date.
-- Display source links, supporting text, and warnings for missing information.
-- Edit suggested values and approve or reject the sample suggestion.
-- Show the approved edition after approval.
-- Reset the sample to repeat the demonstration.
-- Adapt the layout to smaller screens.
+# CCSE Conference Intelligence — integrated M2 prototype
 
-## Open the prototype
+An authenticated Django application connecting Gemini research, source-backed human review,
+approval/rejection, the conference catalog, search, and CSV export.
 
-Download `index.html` and open it in a web browser. No installation or server is required.
+Start with **[the M2 demo guide](docs/M2_DEMO.md)**. Run from this repository's root:
 
-If GitHub Pages is enabled for this repository, open:
+```powershell
+.\Start-M2Demo.ps1
+```
 
-https://printsbycruz.github.io/frontend/
+Open http://127.0.0.1:8010/ and use the private login in `.m2-demo-login.json`.
+First-time installation and a five-minute walkthrough are in the guide.
+The captured official-site example works without a Gemini key; fresh research uses your private `.env`.
 
-## Demonstration
+The application combines the backend from `main` at `b5ae7f3`, the review interface adapted from
+Jonathan's `jonathan-m2-review` at `a1c6fa7`, and the AI contribution at `637055b`.
+Decisions now save to Django instead of downloading a proposed decision for later integration.
+The original M1 HTML prototype and planning artifacts remain historical references.
 
-1. Review the fictional conference and its suggested values.
-2. Read the warnings and supporting text.
-3. Enter a location or correct another suggested value.
-4. Click **Approve edited values** to display the approved edition.
-5. Click **Reset demo**, then try **Reject suggestion**.
+Validation: **144 Django tests pass**, no missing migrations, and an actual browser walkthrough
+confirmed fresh Gemini extraction, source review, corrected-value approval, rejection, catalog
+persistence and CSV download. See [the validation record](docs/M2_VALIDATION.md).
 
-## Current limitations
-
-This is a frontend demonstration, not the integrated application. Conference details and supporting text are fictional, and source links use example.org placeholders. Decisions are stored in this browser using local storage, when available. They are not saved to the team's database or shared with other users.
-
-The prototype does not yet include live AI extraction, backend API integration, authentication, role enforcement, or deadline notifications. Browser approval demonstrates the interaction only; production approval must be validated and saved by the backend.
-
-## Tools and integration plan
-
-This standalone prototype uses HTML, CSS, and JavaScript. The team's proposed application stack is Django, PostgreSQL, and Django templates with Bootstrap. The next step is to integrate the review interface with the extraction response and backend approval workflow, keeping pending suggestions separate from approved conference editions.
-
-## Files
-
-- `index.html` — self-contained review-screen prototype.
-- `README.md` — setup, demonstration, and integration notes.
+This is a local development prototype. PostgreSQL deployment, hosted access, scheduled workers,
+notifications and broader website evaluation remain separate work.
+Never upload `.env`, `.venv`, `.m2-demo-login.json`, or local database files.

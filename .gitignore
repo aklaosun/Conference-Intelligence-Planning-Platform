@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+*.sqlite3*
+candidate*.json
+!candidate-schema.json
+refresh-report*.json
+.pytest_cache/
+.m2-*
+
+# Desktop client and production build artifacts
+**/node_modules/
+**/release/
+**/staticfiles/
+client/.npmrc
+deploy/.env
+
+desktop-backend/build/
+desktop-backend/dist/
+desktop-backend/*.spec
+
+.desktop-build-venv/

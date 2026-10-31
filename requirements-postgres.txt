@@ -1,0 +1,2 @@
+-r requirements-ai.lock.txt
+psycopg[binary]>=3.2,<4

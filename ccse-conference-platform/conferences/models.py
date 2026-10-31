@@ -118,6 +118,8 @@ class ExtractionCandidate(models.Model):
 
     requested_url = models.URLField()
     raw_payload = models.JSONField()
+    reviewed_payload = models.JSONField(null=True, blank=True)
+    review_notes = models.TextField(blank=True, default="")
 
     submitted_at = models.DateTimeField(auto_now_add=True)
     reviewed_at = models.DateTimeField(null=True, blank=True)
@@ -126,3 +128,7 @@ class ExtractionCandidate(models.Model):
     def __str__(self):
         name = self.raw_payload.get("fields", {}).get("conference_name", {}).get("value", "Unknown")
         return f"Candidate: {name} ({self.status})"
+
+# Domain modules keep the core conference and extraction contracts stable.
+from .planning_models import (PlanningStage,ConferencePlan,BudgetLine,OutcomeReport,SelectionCriterion,CriterionRating,ActivityEvent,ReportSubscription,ReportDelivery)
+from .access_models import AccessInvitation,LoginThrottle

@@ -1,0 +1,625 @@
+{
+  "$defs": {
+    "ConferenceFields": {
+      "additionalProperties": false,
+      "properties": {
+        "conference_name": {
+          "$ref": "#/$defs/EvidenceField_str_"
+        },
+        "organizer": {
+          "$ref": "#/$defs/EvidenceField_str_"
+        },
+        "year": {
+          "$ref": "#/$defs/EvidenceField_int_"
+        },
+        "start_date": {
+          "$ref": "#/$defs/EvidenceField_date_"
+        },
+        "end_date": {
+          "$ref": "#/$defs/EvidenceField_date_"
+        },
+        "start_time": {
+          "$ref": "#/$defs/EvidenceField_time_"
+        },
+        "timezone": {
+          "$ref": "#/$defs/EvidenceField_str_"
+        },
+        "location": {
+          "$ref": "#/$defs/EvidenceField_str_"
+        },
+        "attendance_format": {
+          "$ref": "#/$defs/EvidenceField_Literal__in_person____virtual____hybrid___"
+        },
+        "themes": {
+          "$ref": "#/$defs/EvidenceField_list_str__"
+        },
+        "target_audience": {
+          "$ref": "#/$defs/EvidenceField_list_str__"
+        }
+      },
+      "required": [
+        "conference_name",
+        "organizer",
+        "year",
+        "start_date",
+        "end_date",
+        "start_time",
+        "timezone",
+        "location",
+        "attendance_format",
+        "themes",
+        "target_audience"
+      ],
+      "title": "ConferenceFields",
+      "type": "object"
+    },
+    "EvidenceField_Literal__in_person____virtual____hybrid___": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "in_person",
+                "virtual",
+                "hybrid"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence"
+        },
+        "source_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "corroborating_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "value",
+        "evidence",
+        "source_id"
+      ],
+      "title": "EvidenceField[Literal['in_person', 'virtual', 'hybrid']]",
+      "type": "object"
+    },
+    "EvidenceField_date_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence"
+        },
+        "source_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "corroborating_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "value",
+        "evidence",
+        "source_id"
+      ],
+      "title": "EvidenceField[date]",
+      "type": "object"
+    },
+    "EvidenceField_int_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence"
+        },
+        "source_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "corroborating_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "value",
+        "evidence",
+        "source_id"
+      ],
+      "title": "EvidenceField[int]",
+      "type": "object"
+    },
+    "EvidenceField_list_str__": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence"
+        },
+        "source_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "corroborating_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "value",
+        "evidence",
+        "source_id"
+      ],
+      "title": "EvidenceField[list[str]]",
+      "type": "object"
+    },
+    "EvidenceField_str_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence"
+        },
+        "source_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "corroborating_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "value",
+        "evidence",
+        "source_id"
+      ],
+      "title": "EvidenceField[str]",
+      "type": "object"
+    },
+    "EvidenceField_time_": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evidence"
+        },
+        "source_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "corroborating_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "value",
+        "evidence",
+        "source_id"
+      ],
+      "title": "EvidenceField[time]",
+      "type": "object"
+    },
+    "ExtractedDeadline": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        },
+        "date": {
+          "format": "date",
+          "title": "Date",
+          "type": "string"
+        },
+        "time": {
+          "anyOf": [
+            {
+              "format": "time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Time"
+        },
+        "timezone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Timezone"
+        },
+        "evidence": {
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "source_id": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "additional_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "date",
+        "time",
+        "timezone",
+        "evidence",
+        "source_id",
+        "source_url"
+      ],
+      "title": "ExtractedDeadline",
+      "type": "object"
+    },
+    "ExtractedPrice": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Category",
+          "type": "string"
+        },
+        "rate_type": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Rate Type",
+          "type": "string"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "maximum": 999999.99,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "title": "Amount"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        },
+        "evidence": {
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "source_id": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "additional_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "category",
+        "rate_type",
+        "amount",
+        "currency",
+        "evidence",
+        "source_id",
+        "source_url"
+      ],
+      "title": "ExtractedPrice",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "fields": {
+      "$ref": "#/$defs/ConferenceFields"
+    },
+    "deadlines": {
+      "items": {
+        "$ref": "#/$defs/ExtractedDeadline"
+      },
+      "title": "Deadlines",
+      "type": "array"
+    },
+    "registration_prices": {
+      "items": {
+        "$ref": "#/$defs/ExtractedPrice"
+      },
+      "title": "Registration Prices",
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "schema_version": {
+      "enum": [
+        "1.0",
+        "1.1"
+      ]
+    },
+    "status": {
+      "const": "needs_review"
+    },
+    "requested_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "extracted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "source_url",
+          "title",
+          "retrieved_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retrieved_at": {
+            "type": "string"
+          },
+          "analyzed_text": {
+            "type": "string"
+          },
+          "content_sha256": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "extraction": {
+      "type": "object"
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "summary": {
+      "type": "object"
+    },
+    "changes": {
+      "type": "object"
+    },
+    "monitoring": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "fields",
+    "deadlines",
+    "registration_prices",
+    "warnings",
+    "schema_version",
+    "status",
+    "requested_url",
+    "extracted_at",
+    "sources",
+    "extraction"
+  ],
+  "title": "CCSE AI candidate payload 1.1 (legacy 1.0 compatible)",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

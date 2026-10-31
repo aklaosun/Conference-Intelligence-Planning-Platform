@@ -1,0 +1,359 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "fields": {
+      "additionalProperties": false,
+      "properties": {
+        "conference_name": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "organizer": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "year": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "start_date": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "end_date": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "start_time": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "timezone": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "location": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "attendance_format": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "enum": [
+                "in_person",
+                "virtual",
+                "hybrid"
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "themes": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "items": {
+                "type": "string"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        },
+        "target_audience": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "items": {
+                "type": "string"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "evidence"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "conference_name",
+        "organizer",
+        "year",
+        "start_date",
+        "end_date",
+        "start_time",
+        "timezone",
+        "location",
+        "attendance_format",
+        "themes",
+        "target_audience"
+      ],
+      "type": "object"
+    },
+    "deadlines": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "time": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "timezone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "date",
+          "time",
+          "timezone",
+          "evidence"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "registration_prices": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "rate_type": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Decimal amount, e.g. 100.00"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "category",
+          "rate_type",
+          "amount",
+          "currency",
+          "evidence"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "fields",
+    "deadlines",
+    "registration_prices",
+    "warnings"
+  ],
+  "type": "object"
+}

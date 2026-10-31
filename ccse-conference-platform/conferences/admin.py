@@ -45,3 +45,14 @@ class ExtractionCandidateAdmin(admin.ModelAdmin):
 
 admin.site.register(Deadline)
 admin.site.register(RegistrationPrice)
+
+from .planning_models import PlanningStage,ConferencePlan,BudgetLine,OutcomeReport,SelectionCriterion,CriterionRating,ActivityEvent,ReportSubscription,ReportDelivery
+for model in [PlanningStage,ConferencePlan,BudgetLine,OutcomeReport,SelectionCriterion,CriterionRating,ReportSubscription]:
+    admin.site.register(model)
+
+class WorkspaceAuditAdmin(admin.ModelAdmin):
+    def has_add_permission(self,request):return False
+    def has_change_permission(self,request,obj=None):return False
+    def has_delete_permission(self,request,obj=None):return False
+admin.site.register(ActivityEvent,WorkspaceAuditAdmin)
+admin.site.register(ReportDelivery,WorkspaceAuditAdmin)
