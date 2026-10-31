@@ -12,8 +12,10 @@ try {
     if ($NewReview) { $demoArguments += "--new-review" }
     & $pythonPath $managePath setup_m2_demo @demoArguments
     if ($LASTEXITCODE -ne 0) { throw "Demo setup failed." }
+    & $pythonPath $managePath setup_platform --local-owner
+    if ($LASTEXITCODE -ne 0) { throw "Workspace setup failed." }
     Write-Host ""
-    Write-Host "Open http://127.0.0.1:$Port/"
+    Write-Host "Open http://127.0.0.1:$Port/app/"
     Write-Host "Login details: .m2-demo-login.json (keep this local)."
     Write-Host "Press Ctrl+C here to stop the demo."
     & $pythonPath $managePath runserver "127.0.0.1:$Port" --noreload

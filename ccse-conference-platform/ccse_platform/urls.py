@@ -1,8 +1,11 @@
 from django.contrib import admin
 from django.urls import include, path
-from conferences import ai_views
+from conferences import ai_views, platform_api
 
 urlpatterns = [
+    path("app/", platform_api.application, name="workspace"),
+    path("health/", platform_api.health),
+    path("api/platform/", include("conferences.platform_urls")),
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
     path("api/ai/session/", ai_views.session_info, name="ai-session"),

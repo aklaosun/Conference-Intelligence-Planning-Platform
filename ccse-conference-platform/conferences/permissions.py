@@ -14,11 +14,11 @@ def in_group(user, *names):
 
 
 def can_review(user):
-    return in_group(user, REVIEWERS)
+    return in_group(user, REVIEWERS, "Coordinators")
 
 
 def can_edit(user):
-    return in_group(user, EDITORS, REVIEWERS)
+    return in_group(user, EDITORS, REVIEWERS, "Coordinators")
 
 
 def _require(check):

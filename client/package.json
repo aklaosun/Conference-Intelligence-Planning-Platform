@@ -1,0 +1,71 @@
+{
+  "name": "ccse-conference-workspace",
+  "version": "0.3.0",
+  "private": true,
+  "description": "CCSE conference intelligence desktop and browser client",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "desktop": "electron .",
+    "package:windows": "electron-builder --win nsis",
+    "package:portable": "electron-builder --win portable",
+    "test": "node --test test/*.test.cjs && tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/node": "^26.6.5",
+    "@vitejs/plugin-react": "6.1.2",
+    "vite": "8.3.5",
+    "typescript": "7.0.2",
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "edu.ccse.conferenceworkspace",
+    "productName": "CCSE Conference Workspace",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "CCSE-Workspace-Setup-${version}-${arch}.${ext}",
+      "icon": "electron/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true
+    },
+    "extraResources": [
+      {
+        "from": "../desktop-backend/dist/ccse-backend",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "../data/demo-catalog.json",
+        "to": "demo-catalog.json"
+      }
+    ],
+    "portable": {
+      "artifactName": "CCSE-Workspace-Portable-${version}-${arch}.${ext}"
+    }
+  },
+  "author": "CCSE Capstone Team"
+}
