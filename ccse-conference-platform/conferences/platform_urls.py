@@ -8,4 +8,5 @@ urlpatterns=[
     path('reports/',api.reports),path('team/',api.team),path('invitations/<str:token>/',api.invitation),
     path('reports/export/',api.export_planning),path('subscriptions/',api.subscriptions),
     path('desktop-bootstrap/',api.desktop_bootstrap),path('local-settings/',api.local_settings),
+    path('alerts/',api.alerts),
 ]

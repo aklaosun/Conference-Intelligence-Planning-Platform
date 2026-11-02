@@ -172,6 +172,32 @@ def overview(request):
 
 
 @api
+@require_http_methods(['GET','POST'])
+def alerts(request):
+    from .alert_service import alert_feed, AlertReadState
+    feed = alert_feed(request.user)
+    if request.method == 'POST':
+        data = body(request)
+        keys = data.get('keys')
+        action = data.get('action')
+        if action not in ['read', 'unread'] or not isinstance(keys, list) or len(keys) > 2000:
+            return error('Supply an action of read or unread and at most 2000 alert keys.')
+        if any(not isinstance(key, str) for key in keys):
+            return error('Alert keys must be text.')
+        allowed = {item['key'] for item in feed['results']}
+        keys = set(keys)
+        if not keys <= allowed:
+            return error('One or more alerts have changed. Refresh and try again.')
+        with transaction.atomic():
+            if action == 'read':
+                AlertReadState.objects.bulk_create([AlertReadState(user=request.user, key=key) for key in keys], ignore_conflicts=True)
+            else:
+                AlertReadState.objects.filter(user=request.user, key__in=keys).delete()
+        feed = alert_feed(request.user)
+    return JsonResponse(feed)
+
+
+@api
 @require_GET
 def catalog(request):
     from .views import filtered_conferences
