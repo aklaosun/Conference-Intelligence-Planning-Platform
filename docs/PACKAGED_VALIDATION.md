@@ -30,3 +30,9 @@ Use the Windows ZIP for repeat demonstrations: extract all files and open the ex
 Live Gemini extraction succeeded using the existing private key in an isolated QA profile. The key was cleared from that disposable profile after testing and was never included in the release. Each recipient supplies their own key for live extraction. Normal catalog, planning, saved evidence review and reporting do not require a key.
 
 These checks cover this Windows x64 environment. Recipients should perform a quick first launch on their own computers before presenting. The separate local demos do not synchronize. Sponsor criteria/weights, final acceptance and other project-plan gaps remain documented in REQUIREMENTS_STATUS.md. The optional installer executable was built earlier; this acceptance run validates the portable and extracted-folder distributions, not a system installation/uninstallation cycle.
+
+## November 2 alert update 0.3.1
+
+199 Django tests and the client checks pass. Five compiled-backend checks verified migration and real catalog loading, React alert assets, overdue/today/soon/30-day reminders, persistent personal read status, and removal of completed follow-up alerts. A native Windows walkthrough verified the dashboard summary, bell, Alerts page, and read/unread controls with the real catalog. The real 35-conference catalog remained intact; synthetic reminder records were created only in an isolated QA profile and are not part of the distribution.
+
+Alerts refresh while the app is open, use calendar dates, and preserve source timezone labels. Email, operating-system delivery, and exact timezone-aware scheduling are not included. The updated portable executable is packaged from the same validated folder; its unpack-and-launch cycle was not separately rerun in this update.
