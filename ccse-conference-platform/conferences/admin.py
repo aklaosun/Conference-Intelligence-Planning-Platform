@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Conference, ConferenceEdition, Deadline, ExtractionCandidate, RegistrationPrice
+from .models import Center, Conference, ConferenceEdition, Deadline, ExtractionCandidate, RegistrationPrice, Theme
 
 
 class DeadlineInline(admin.TabularInline):
@@ -22,10 +22,29 @@ class EditionInline(admin.TabularInline):
 
 @admin.register(Conference)
 class ConferenceAdmin(admin.ModelAdmin):
-    list_display = ("name", "organizer", "cac_relevant", "cdsa_relevant")
-    list_filter = ("cac_relevant", "cdsa_relevant")
-    search_fields = ("name", "organizer")
+    list_display = ("name", "organizer", "center_list")
+    list_filter = ("centers", "themes")
+    search_fields = ("name", "organizer", "themes__name")
+    filter_horizontal = ("centers", "themes")
     inlines = [EditionInline]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related("centers")
+
+    @admin.display(description="Centers")
+    def center_list(self, obj):
+        return ", ".join(obj.center_codes)
+
+
+@admin.register(Center)
+class CenterAdmin(admin.ModelAdmin):
+    list_display = ("code", "name")
+
+
+@admin.register(Theme)
+class ThemeAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
 
 
 @admin.register(ConferenceEdition)

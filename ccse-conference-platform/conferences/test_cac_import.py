@@ -71,7 +71,7 @@ class SponsorImportTests(TestCase):
         report=self.run_import()
         e=ConferenceEdition.objects.get()
         self.assertEqual(e.verification_status,VerificationStatus.NEEDS_REVIEW)
-        self.assertTrue(e.conference.cac_relevant)
+        self.assertEqual(e.conference.center_codes, ['CAC'])
         self.assertEqual(e.field_sources['legacy_imports'][0]['raw_values']['NOTES'],'Source note')
         self.assertFalse(RegistrationPrice.objects.exists())
         self.assertEqual(report['editions_created'],1)

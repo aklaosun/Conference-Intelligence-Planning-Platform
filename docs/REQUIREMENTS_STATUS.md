@@ -5,7 +5,7 @@ Based on `Project_Plan_P26_T1.docx`, reviewed October 31, 2026. Assigned roles a
 | Requirement | Current implementation / evidence | Remaining work |
 | --- | --- | --- |
 | Representative migrated real data | 35 CAC conferences/35 editions; workbook row/cell provenance; repeatable importer; no fabricated missing costs or dates | Receive CDSA source data and verify stale/inferred dates |
-| Catalog and yearly history | Search/filter, conference/edition edits, source evidence, statuses, historical deadlines and prices | Broader multi-edition acceptance dataset |
+| Catalog and yearly history | Search/filter, conference/edition edits, source evidence, statuses, historical deadlines and prices; `seed_yearly_history` demo with 2025/2026 editions and tests proving a new year leaves earlier editions unchanged (see `docs/DATABASE.md`) | Broader multi-edition acceptance dataset from real past attendance |
 | AI extraction and validation | Gemini, bounded official-page fetching, evidence validation, missing-field handling, change detection and staged suggestions | Sponsor evaluation of extraction accuracy across representative sites |
 | Human Approve / Correct / Reject | Integrated evidence workbench; editable scalar/child rows; conflict decisions; atomic save; retained original response and reviewer audit | Sponsor acceptance walkthrough |
 | Integrated frontend/backend | React/Vite served by Django; Electron Windows client; bundled local Python service; independent per-user data | Shared hosting deferred by user choice; macOS/Linux packaging |
@@ -17,8 +17,8 @@ Based on `Project_Plan_P26_T1.docx`, reviewed October 31, 2026. Assigned roles a
 | Deadline reminders | Dashboard upcoming window; upcoming/overdue/history views; source timezones and AoE retained; dated follow-ups | Per-user delivery preferences and exact timezone-aware notification scheduling |
 | Reporting | Catalog CSV and planning/outcome CSV, known subtotals and missing counts; opt-in weekly email command with delivery records | SMTP/approved recipients/scheduler intentionally disabled in local demos |
 | Discovery / monitoring | Existing bounded companion-page research and refresh command stage changes for human review | Autonomous discovery scope, configured schedules and operational monitoring |
-| Normalized storage | Conference/edition, deadline/price, plans, budgets, criteria/ratings, outcomes, roles and access tables | Center flags/themes still use the existing boolean/JSON contract; migration to center/theme relationships remains pending |
-| Testing / handoff | Existing extraction/review/import regression suite plus workspace auth/planning/report/local-bootstrap tests; desktop setup guide | Final acceptance tests, usability/accessibility review and live PostgreSQL validation |
+| Normalized storage | Conference/edition, deadline/price, plans, budgets, criteria/ratings, outcomes, roles and access tables; CAC/CDSA/CCSE centers and themes in relationship tables (migrations 0005–0007, data preserved and reversible); schema diagram and data dictionary in `docs/DATABASE.md` | Selection criteria still store the center as a code rather than a link to the center table |
+| Testing / handoff | Existing extraction/review/import regression suite plus workspace auth/planning/report/local-bootstrap tests; desktop setup guide; PostgreSQL 16 validation of migrations, CAC import, main workflows and tested backup/restore, plus the full suite on PostgreSQL 18 (`docs/DATABASE.md`) | Final acceptance tests and usability/accessibility review |
 
 ## Acceptance conditions still requiring the sponsor
 
