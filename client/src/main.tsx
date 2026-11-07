@@ -5,6 +5,7 @@ import './web.css';
 import {ThemePicker} from './ThemePicker';
 import {Account} from './Account';
 import {TeamAccess} from './Team';
+import {Connections} from './Connections';
 import {applyTheme,normalizeTheme,savedTheme,type ThemeId} from './themes';
 
 type Row=Record<string,any>;
@@ -66,7 +67,7 @@ function App(){
   if(!session)return <main className="boot"><div className="brand-mark">K</div><h1>CCSE Conference Workspace</h1>{bootError?<><Alert text={bootError}/><button onClick={()=>location.reload()}>Retry connection</button></>:<Loading/>}</main>;
   if(!session.authenticated)return <><div className="auth-theme">{themeControl}</div><Login done={s=>{setSession(s);go('/')}}/></>;
   const user=session.user;
-  const nav=[['/','grid','Overview'],['/catalog','catalog','Conference catalog'],['/research','spark','Research & review'],['/plans','plan','Planning & budgets'],['/alerts','bell','Alerts'],['/deadlines','clock','Deadlines'],['/reports','chart','Reports & outcomes'],['/account','users','My account'],...(session.ai_settings_available&&user.is_admin?[['/local-settings','shield','AI connection']]:[]),...(user.is_admin?[['/criteria','shield','Selection framework'],['/team','users','People & access']]:[])];
+  const nav=[['/','grid','Overview'],['/catalog','catalog','Conference catalog'],['/research','spark','Research & review'],['/plans','plan','Planning & budgets'],['/alerts','bell','Alerts'],['/deadlines','clock','Deadlines'],['/reports','chart','Reports & outcomes'],['/account','users','My account'],...(session.ai_settings_available&&user.is_admin?[['/local-settings','shield','AI connection']]:[]),...(user.is_admin?[['/criteria','shield','Selection framework'],['/team','users','People & access'],['/connections','shield','Service connections']]:[])];
   const routePath=route.split('?')[0];
   const pageName=nav.find(([path])=>path===routePath)?.[2]||(routePath.startsWith('/conference/')?'Conference details':routePath.startsWith('/plans/')?'Conference plan':'Workspace');
   let content:React.ReactNode;
@@ -78,6 +79,7 @@ function App(){
   else if(route==='/alerts')content=<AlertsPage feed={alerts}/>;
   else if(route==='/deadlines')content=<Deadlines/>;
   else if(route==='/reports')content=<Reports user={user}/>;
+  else if(route==='/connections'&&user.is_admin)content=<Connections api={api}/>;
   else if(route==='/account')content=<Account user={user} theme={theme} onTheme={chooseTheme} onUser={updateUser} api={api} themeBusy={themeSaving}/>;
   else if(route==='/local-settings'&&session.ai_settings_available&&user.is_admin)content=<LocalSettings local={!!session.local_demo}/>;
   else if(route==='/team'&&user.is_admin)content=<TeamAccess local={!!session.local_demo||!!session.local_only} api={api}/>;
@@ -191,7 +193,7 @@ function LocalSettings({local=true}:{local?:boolean}){
 }
 function Subscriptions(){
   const{data,error,reload}=useData('subscriptions/');const[form,setForm]=useState<Row>({name:'',email:'',weekday:'0',enabled:false}),[failure,setFailure]=useState('');
-  return <section className="panel"><h2>Weekly director report subscriptions</h2><p className="muted">{data?.email_enabled?'SMTP is enabled. Delivery also requires the documented scheduled server job.':'Email delivery is disabled. Local demos can export CSV reports; no emails are sent.'}</p><Alert text={error||failure}/><form onSubmit={async e=>{e.preventDefault();try{await api('subscriptions/','POST',form);setForm({name:'',email:'',weekday:'0',enabled:false});reload()}catch(e:any){setFailure(e.message)}}}><div className="form-grid"><Field label="Recipient name" value={form.name} onChange={v=>setForm({...form,name:v})} required/><Field label="Report email" type="email" value={form.email} onChange={v=>setForm({...form,email:v})} required/><Field label="Delivery day" value={form.weekday} onChange={v=>setForm({...form,weekday:v})} options={['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map((x,i)=>({value:i,label:x}))}/></div><label className="check-field"><input type="checkbox" disabled={!data?.email_enabled} checked={form.enabled} onChange={e=>setForm({...form,enabled:e.target.checked})}/> Enable weekly report delivery</label><button className="secondary">Save subscription</button></form>{rows(data?.results).map(s=><div className="detail-row" key={s.id}><div><strong>{s.name}</strong><small>{s.email}</small></div><Pill>{s.enabled?'Enabled':'Disabled'}</Pill><button className="secondary" onClick={()=>setForm(s)}>Edit</button></div>)}</section>;
+  return <section className="panel"><h2>Weekly director report subscriptions</h2><p className="muted">{data?.email_enabled?'Email delivery is enabled. Automatic reports also require the configured weekly-report scheduler.':'Email delivery is disabled. CSV exports remain available; no report emails are sent.'}</p><Alert text={error||failure}/><form onSubmit={async e=>{e.preventDefault();try{await api('subscriptions/','POST',form);setForm({name:'',email:'',weekday:'0',enabled:false});reload()}catch(e:any){setFailure(e.message)}}}><div className="form-grid"><Field label="Recipient name" value={form.name} onChange={v=>setForm({...form,name:v})} required/><Field label="Report email" type="email" value={form.email} onChange={v=>setForm({...form,email:v})} required/><Field label="Delivery day" value={form.weekday} onChange={v=>setForm({...form,weekday:v})} options={['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map((x,i)=>({value:i,label:x}))}/></div><label className="check-field"><input type="checkbox" disabled={!data?.email_enabled} checked={form.enabled} onChange={e=>setForm({...form,enabled:e.target.checked})}/> Enable weekly report delivery</label><button className="secondary">Save subscription</button></form>{rows(data?.results).map(s=><div className="detail-row" key={s.id}><div><strong>{s.name}</strong><small>{s.email}</small></div><Pill>{s.enabled?'Enabled':'Disabled'}</Pill><button className="secondary" onClick={()=>setForm(s)}>Edit</button></div>)}</section>;
 }
 
 createRoot(document.getElementById('root')!).render(<App/>);

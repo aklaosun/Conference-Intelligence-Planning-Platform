@@ -40,7 +40,13 @@ SECURE_REFERRER_POLICY='same-origin'
 if os.environ.get('DJANGO_TRUST_PROXY','0')=='1':
     SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO','https')
 DATA_UPLOAD_MAX_MEMORY_SIZE=2_000_000
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PROVIDER=os.environ.get('EMAIL_PROVIDER','smtp')
+if EMAIL_PROVIDER not in ('smtp','brevo'):
+    raise ImproperlyConfigured('EMAIL_PROVIDER must be smtp or brevo.')
+EMAIL_BACKEND=('conferences.email_backend.BrevoEmailBackend' if EMAIL_PROVIDER=='brevo'
+    else 'django.core.mail.backends.smtp.EmailBackend')
+BREVO_API_KEY=os.environ.get('BREVO_API_KEY','')
+REPORT_JOB_TOKEN=os.environ.get('REPORT_JOB_TOKEN','')
 EMAIL_HOST=os.environ.get('EMAIL_HOST','')
 EMAIL_PORT=int(os.environ.get('EMAIL_PORT','587'))
 EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER','')

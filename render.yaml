@@ -14,7 +14,7 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: ccse_platform.production_settings
       - key: DJANGO_SECRET_KEY
-        generateValue: true
+        sync: false
       - key: DATABASE_URL
         sync: false
       - key: DATABASE_SSL_REQUIRE

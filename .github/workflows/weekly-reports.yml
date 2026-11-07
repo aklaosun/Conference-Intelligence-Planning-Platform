@@ -1,0 +1,28 @@
+name: Weekly conference reports
+on:
+  schedule:
+    - cron: '17 14 * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: ccse-weekly-reports
+  cancel-in-progress: false
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      REPORT_JOB_TOKEN: ${{ secrets.CCSE_REPORT_JOB_TOKEN }}
+    steps:
+      - name: Deliver due opt-in reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$REPORT_JOB_TOKEN" ]; then
+            echo 'Email scheduling is not configured. No emails were sent.'
+            exit 0
+          fi
+          curl --silent --show-error --fail-with-body \
+            --retry 2 --retry-delay 30 --connect-timeout 20 --max-time 180 \
+            --request POST --header "Authorization: Bearer $REPORT_JOB_TOKEN" \
+            'https://ccse-conference-workspace.onrender.com/api/platform/scheduled-reports/'

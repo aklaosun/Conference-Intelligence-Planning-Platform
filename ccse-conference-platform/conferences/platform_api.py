@@ -382,7 +382,7 @@ def subscriptions(request):
         instance=get_object_or_404(ReportSubscription,pk=data['id']) if data.get('id') else None
         form=checked(ReportSubscriptionForm(data,instance=instance))
         if form.cleaned_data['enabled'] and not getattr(settings,'WORKSPACE_EMAIL_ENABLED',False):
-            return error('Configure and enable SMTP on the server before enabling report emails.')
+            return error('Configure and enable the email provider on the server before enabling report emails.')
         saved=form.save()
         event(request.user,'report_subscription_updated',f'Updated report subscription {saved.pk}.')
     return JsonResponse({'results':list(ReportSubscription.objects.values('id','name','email','weekday','enabled')),
@@ -394,15 +394,31 @@ def subscriptions(request):
 def team(request):
     if not can_manage_workspace(request.user):return error('Administrator access is required.',403)
     created_url=None
+    email_sent=False
+    email_warning=''
     if request.method=='POST':
         data=body(request)
         action=data.get('action','invite')
         if action=='invite':
             form=checked(InvitationForm(data))
+            send_invitation=data.get('send_email') is True
+            if send_invitation and not getattr(settings,'WORKSPACE_EMAIL_ENABLED',False):
+                return error('Email delivery is disabled. Create a private invitation link instead.')
             if User.objects.filter(email__iexact=form.cleaned_data['email']).exists():raise ValueError('An account already uses this email. Manage that existing account instead.')
             invitation,token=AccessInvitation.issue(user=request.user,**form.cleaned_data)
             created_url=request.build_absolute_uri('/app/#/join/'+token)
             event(request.user,'access_invited',f'Created {invitation.role} invitation for {invitation.email}.')
+            if send_invitation:
+                from django.core.mail import send_mail
+                try:
+                    email_sent=send_mail('Your CCSE Conference Workspace invitation',
+                        f'You have been invited with {invitation.get_role_display()} access. '
+                        'Create your personal account using this private, single-use link. It expires in three days.\n\n'+created_url,
+                        settings.DEFAULT_FROM_EMAIL,[invitation.email],fail_silently=False)==1
+                except Exception:
+                    pass
+                if not email_sent:
+                    email_warning='Email acceptance was not confirmed. The invitation is still valid; copy the private link and check the provider activity log before sending again.'
         elif action=='revoke':
             invitation=get_object_or_404(AccessInvitation,pk=data.get('id'))
             invitation.revoked_at=timezone.now();invitation.save(update_fields=['revoked_at'])
@@ -420,6 +436,7 @@ def team(request):
             event(request.user,'access_updated',f'Updated access for {target.username}.')
         else:raise ValueError('Unknown account action.')
     return JsonResponse({'invitation_url':created_url,'current_user_id':request.user.pk,
+        'email_enabled':getattr(settings,'WORKSPACE_EMAIL_ENABLED',False),'email_sent':email_sent,'email_warning':email_warning,
         'roles':[{'value':key,'label':label} for key,label in ROLE_CHOICES],
         'users':[dict(user_data(u),active=u.is_active) for u in User.objects.prefetch_related('groups').order_by('username')],
         'invitations':[{'id':i.pk,'email':i.email,'role':i.role,'expires_at':i.expires_at,'usable':i.usable,
