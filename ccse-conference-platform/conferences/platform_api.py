@@ -6,8 +6,8 @@ import os,re,threading
 from functools import wraps
 from decimal import Decimal
 from django.conf import settings
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
+from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
 from django.contrib.auth.models import User,Group
 from django.core.paginator import Paginator
 from django.db import transaction,connection,DatabaseError
@@ -21,11 +21,12 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET,require_POST,require_http_methods
 from .models import Conference,ConferenceEdition,Deadline,RegistrationPrice,ExtractionCandidate
-from .permissions import can_edit,can_review
+from .permissions import can_edit,can_review,can_manage_workspace
 from .planning_models import (PlanningStage,ConferencePlan,BudgetLine,OutcomeReport,SelectionCriterion,
     CriterionRating,ActivityEvent,ReportSubscription,budget_totals,evaluation_scores)
-from .access_models import AccessInvitation,LoginThrottle,ROLE_GROUPS
-from .platform_forms import PlanForm,BudgetForm,OutcomeForm,CriterionForm,RatingForm,InvitationForm,ReportSubscriptionForm
+from .access_models import AccessInvitation,LoginThrottle,ROLE_GROUPS,ROLE_CHOICES,UserPreference,THEME_CHOICES
+from .platform_forms import (PlanForm,BudgetForm,OutcomeForm,CriterionForm,RatingForm,InvitationForm,
+    ReportSubscriptionForm,ProfileForm,InvitationAcceptForm)
 
 
 def error(message,status=400):return JsonResponse({'error':message},status=status)
@@ -49,15 +50,41 @@ def event(user,action,description,edition=None):
 def user_data(user):
     return {'id':user.pk,'username':user.username,'name':user.get_full_name() or user.username,'email':user.email,
         'can_edit':can_edit(user),'can_review':can_review(user),'can_research':user.has_perm('conferences.add_extractioncandidate'),
-        'is_admin':user.is_superuser,'roles':list(user.groups.values_list('name',flat=True))}
+        'is_admin':can_manage_workspace(user),'is_superuser':user.is_superuser,'is_staff':user.is_staff,
+        'role':('administrator' if can_manage_workspace(user) else 'coordinator' if can_review(user) else 'contributor' if user.has_perm('conferences.add_extractioncandidate') else 'viewer'),
+        'roles':list(user.groups.values_list('name',flat=True)),
+        'first_name':user.first_name,'last_name':user.last_name,
+        'theme':UserPreference.objects.filter(user=user).values_list('theme',flat=True).first() or 'ksu'}
 
 
 @ensure_csrf_cookie
 @require_GET
 def session(request):
     return JsonResponse({'authenticated':request.user.is_authenticated,'csrf_token':get_token(request),
-        'local_demo':getattr(settings,'LOCAL_DESKTOP',False),
+        'local_demo':getattr(settings,'LOCAL_DESKTOP',False),'local_only':getattr(settings,'WEB_WORKSPACE',False),'ai_settings_available':getattr(settings,'LOCAL_DESKTOP',False) or getattr(settings,'WEB_WORKSPACE',False),
         'user':user_data(request.user) if request.user.is_authenticated else None})
+
+
+@api
+@require_http_methods(['GET','POST'])
+def account(request):
+    if request.method=='POST':
+        data=body(request)
+        action=data.get('action')
+        if action=='profile':
+            checked(ProfileForm(data,instance=request.user)).save()
+            event(request.user,'profile_updated','Updated personal profile.')
+        elif action=='theme':
+            theme=data.get('theme')
+            if theme not in dict(THEME_CHOICES):return error('Choose one of the four available themes.')
+            UserPreference.objects.update_or_create(user=request.user,defaults={'theme':theme})
+        elif action=='password':
+            checked(PasswordChangeForm(request.user,data)).save()
+            update_session_auth_hash(request,request.user)
+            event(request.user,'password_changed','Changed personal password.')
+        else:return error('Unknown account action.')
+    return JsonResponse({'user':user_data(request.user),'csrf_token':get_token(request),
+        'themes':[{'value':key,'label':label} for key,label in THEME_CHOICES]})
 
 _bootstrap_lock=threading.Lock()
 
@@ -81,8 +108,12 @@ def desktop_bootstrap(request):
 @api
 @require_http_methods(['GET','POST'])
 def local_settings(request):
-    if not getattr(settings,'LOCAL_DESKTOP',False):return error('Not found.',404)
-    if not request.user.is_superuser:return error('Local owner access is required.',403)
+    desktop=getattr(settings,'LOCAL_DESKTOP',False)
+    web=getattr(settings,'WEB_WORKSPACE',False)
+    if not desktop and not web:return error('Not found.',404)
+    if not can_manage_workspace(request.user) or (desktop and not request.user.is_superuser):return error('Workspace administrator access is required.',403)
+    data_dir=settings.DESKTOP_DATA_DIR if desktop else settings.WEB_DATA_DIR
+    config=settings.DESKTOP_CONFIG if desktop else settings.WEB_AI_CONFIG
     if request.method=='POST':
         data=body(request)
         key=data.get('api_key','')
@@ -94,13 +125,13 @@ def local_settings(request):
             return error('Copy the complete API key; masked values and spaces are not valid.')
         if not key:key=os.environ.get('GEMINI_API_KEY','')
         text='# Private local backend configuration. Never share this file.\nGEMINI_API_KEY='+key+'\nGEMINI_MODEL='+model+'\n'
-        temporary=settings.DESKTOP_DATA_DIR/'backend.env.tmp'
+        temporary=data_dir/'backend.env.tmp'
         temporary.write_text(text,encoding='utf-8');temporary.chmod(0o600)
-        temporary.replace(settings.DESKTOP_CONFIG)
+        temporary.replace(config)
         os.environ['GEMINI_API_KEY']=key;os.environ['GEMINI_MODEL']=model
     return JsonResponse({'configured':bool(os.environ.get('GEMINI_API_KEY')),
         'model':os.environ.get('GEMINI_MODEL','gemini-3.5-flash-lite'),
-        'data_folder':str(settings.DESKTOP_DATA_DIR)})
+        'data_folder':str(data_dir)})
 
 @require_POST
 def sign_in(request):
@@ -123,7 +154,8 @@ def sign_in(request):
             return error('Username or password did not match.',400)
         attempt.delete()
     login(request,user)
-    return JsonResponse({'authenticated':True,'csrf_token':get_token(request),'user':user_data(user)})
+    return JsonResponse({'authenticated':True,'csrf_token':get_token(request),'user':user_data(user),
+        'local_demo':getattr(settings,'LOCAL_DESKTOP',False),'local_only':getattr(settings,'WEB_WORKSPACE',False),'ai_settings_available':getattr(settings,'LOCAL_DESKTOP',False) or getattr(settings,'WEB_WORKSPACE',False)})
 
 @require_POST
 def sign_out(request):
@@ -169,6 +201,32 @@ def overview(request):
         'plans':ConferencePlan.objects.count(),'outcomes':OutcomeReport.objects.count(),
         'years':list(editions.values('year').annotate(count=Count('id')).order_by('year')),
         'activity':[{'action':a.action,'description':a.description,'at':a.created_at,'user':a.user.get_username() if a.user else 'Former user'} for a in ActivityEvent.objects.select_related('user')[:8]]})
+
+
+@api
+@require_http_methods(['GET','POST'])
+def alerts(request):
+    from .alert_service import alert_feed, AlertReadState
+    feed = alert_feed(request.user)
+    if request.method == 'POST':
+        data = body(request)
+        keys = data.get('keys')
+        action = data.get('action')
+        if action not in ['read', 'unread'] or not isinstance(keys, list) or len(keys) > 2000:
+            return error('Supply an action of read or unread and at most 2000 alert keys.')
+        if any(not isinstance(key, str) for key in keys):
+            return error('Alert keys must be text.')
+        allowed = {item['key'] for item in feed['results']}
+        keys = set(keys)
+        if not keys <= allowed:
+            return error('One or more alerts have changed. Refresh and try again.')
+        with transaction.atomic():
+            if action == 'read':
+                AlertReadState.objects.bulk_create([AlertReadState(user=request.user, key=key) for key in keys], ignore_conflicts=True)
+            else:
+                AlertReadState.objects.filter(user=request.user, key__in=keys).delete()
+        feed = alert_feed(request.user)
+    return JsonResponse(feed)
 
 
 @api
@@ -257,7 +315,7 @@ def outcome(request,pk):
 @require_http_methods(['GET','POST'])
 def criteria(request):
     if request.method=='POST':
-        if not request.user.is_superuser:return error('Administrator access is required.',403)
+        if not can_manage_workspace(request.user):return error('Administrator access is required.',403)
         data=body(request)
         instance=get_object_or_404(SelectionCriterion,pk=data['id']) if data.get('id') else None
         form=checked(CriterionForm(data,instance=instance))
@@ -305,7 +363,7 @@ def reports(request):
         'outcomes':[{'conference':str(o.edition),'conference_id':o.edition.conference_id,'summary':o.summary,
             'attendees':o.attendees,'contacts':o.contacts,'partnerships':o.partnerships,'follow_up_date':o.follow_up_date,
             'follow_up_completed':o.follow_up_completed} for o in OutcomeReport.objects.select_related('edition__conference')],
-        'subscriptions':list(ReportSubscription.objects.values('id','name','email','weekday','enabled')) if request.user.is_superuser else []})
+        'subscriptions':list(ReportSubscription.objects.values('id','name','email','weekday','enabled')) if can_manage_workspace(request.user) else []})
 
 @api
 @require_GET
@@ -318,7 +376,7 @@ def export_planning(request):
 @api
 @require_http_methods(['GET','POST'])
 def subscriptions(request):
-    if not request.user.is_superuser:return error('Administrator access is required.',403)
+    if not can_manage_workspace(request.user):return error('Administrator access is required.',403)
     if request.method=='POST':
         data=body(request)
         instance=get_object_or_404(ReportSubscription,pk=data['id']) if data.get('id') else None
@@ -334,7 +392,7 @@ def subscriptions(request):
 @api
 @require_http_methods(['GET','POST'])
 def team(request):
-    if not request.user.is_superuser:return error('Administrator access is required.',403)
+    if not can_manage_workspace(request.user):return error('Administrator access is required.',403)
     created_url=None
     if request.method=='POST':
         data=body(request)
@@ -361,7 +419,8 @@ def team(request):
                 target.is_active=data['active'];target.save(update_fields=['is_active'])
             event(request.user,'access_updated',f'Updated access for {target.username}.')
         else:raise ValueError('Unknown account action.')
-    return JsonResponse({'invitation_url':created_url,
+    return JsonResponse({'invitation_url':created_url,'current_user_id':request.user.pk,
+        'roles':[{'value':key,'label':label} for key,label in ROLE_CHOICES],
         'users':[dict(user_data(u),active=u.is_active) for u in User.objects.prefetch_related('groups').order_by('username')],
         'invitations':[{'id':i.pk,'email':i.email,'role':i.role,'expires_at':i.expires_at,'usable':i.usable,
             'used':bool(i.used_at),'revoked':bool(i.revoked_at)} for i in AccessInvitation.objects.order_by('-created_at')[:100]]})
@@ -374,7 +433,7 @@ def invitation(request,token):
     if not invitation.usable:return error('This invitation has expired, was revoked, or has already been used.',410)
     if request.method=='GET':return JsonResponse({'email':invitation.email,'role':invitation.role,'expires_at':invitation.expires_at,'csrf_token':get_token(request)})
     try:
-        form=checked(UserCreationForm(body(request)))
+        form=checked(InvitationAcceptForm(body(request)))
         with transaction.atomic():
             locked=AccessInvitation.objects.select_for_update().get(pk=invitation.pk)
             if not locked.usable:return error('This invitation has already been used.',410)
@@ -384,7 +443,8 @@ def invitation(request,token):
             locked.used_at=timezone.now();locked.save(update_fields=['used_at'])
             event(user,'invitation_accepted',f'Joined with {locked.role} access.')
         login(request,user)
-        return JsonResponse({'authenticated':True,'user':user_data(user),'csrf_token':get_token(request)})
+        return JsonResponse({'authenticated':True,'user':user_data(user),'csrf_token':get_token(request),
+            'local_demo':getattr(settings,'LOCAL_DESKTOP',False),'local_only':getattr(settings,'WEB_WORKSPACE',False),'ai_settings_available':getattr(settings,'LOCAL_DESKTOP',False) or getattr(settings,'WEB_WORKSPACE',False)})
     except (ValueError,TypeError):return error('Choose an unused username and matching strong passwords.')
 
 

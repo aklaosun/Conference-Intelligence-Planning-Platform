@@ -47,5 +47,6 @@ try{
     if($LASTEXITCODE -ne 0){throw 'Windows installer packaging failed.'}
     & $npm run package:portable
     if($LASTEXITCODE -ne 0){throw 'Portable packaging failed.'}
-    Write-Host 'Ready: client\release\CCSE-Workspace-Setup-0.3.0-x64.exe and CCSE-Workspace-Portable-0.3.0-x64.exe'
+    $version=(Get-Content -LiteralPath (Join-Path $root 'client\package.json') -Raw | ConvertFrom-Json).version
+    Write-Host "Ready: client\release\CCSE-Workspace-Setup-$version-x64.exe and CCSE-Workspace-Portable-$version-x64.exe"
 }finally{Pop-Location}

@@ -1,0 +1,9 @@
+{% load static %}
+<script>
+(function(){
+  function setTheme(value){if(['ksu','light','dark','midnight'].includes(value))document.documentElement.dataset.theme=value;}
+  try{setTheme(localStorage.getItem('ccse.theme')||'ksu');}catch(e){setTheme('ksu');}
+  window.addEventListener('message',function(event){if(event.origin===location.origin&&event.source===window.parent&&event.data&&event.data.type==='ccse-theme')setTheme(event.data.theme);});
+})();
+</script>
+<link rel="stylesheet" href="{% static 'conferences/theme-palette.css' %}">

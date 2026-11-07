@@ -1,0 +1,2 @@
+-r requirements-ai.lock.txt
+whitenoise==6.12.0

@@ -1,0 +1,33 @@
+# Free web hosting only. Provide a Neon Free PostgreSQL connection privately.
+# This blueprint intentionally does not create a paid or expiring Render database.
+services:
+  - type: web
+    name: ccse-conference-workspace
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health/
+    autoDeployTrigger: "off"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: ccse_platform.production_settings
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL_REQUIRE
+        value: "1"
+      - key: DJANGO_TRUST_PROXY
+        value: "1"
+      - key: SEED_REAL_CATALOG
+        value: "1"
+      - key: BOOTSTRAP_ADMIN_EMAIL
+        sync: false
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: "1"
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite

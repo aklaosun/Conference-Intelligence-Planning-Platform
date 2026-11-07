@@ -20,6 +20,8 @@ class Command(BaseCommand):
         contribute.permissions.set(list(read)+list(Permission.objects.filter(content_type__app_label='conferences',codename='add_extractioncandidate')))
         coordinate,_=Group.objects.get_or_create(name='Coordinators')
         coordinate.permissions.set(Permission.objects.filter(content_type__app_label='conferences',content_type__model__in=models))
+        administrators,_=Group.objects.get_or_create(name='Administrators')
+        administrators.permissions.set(Permission.objects.filter(content_type__app_label='conferences',content_type__model__in=models))
         names=[('identified','Identified'),('under-evaluation','Under evaluation'),('interested','Interested'),
             ('tentatively-planned','Tentatively planned'),('approved','Approved'),('not-attending','Not attending'),('attended','Attended')]
         for position,(code,name) in enumerate(names):PlanningStage.objects.get_or_create(code=code,defaults={'name':name,'position':position})

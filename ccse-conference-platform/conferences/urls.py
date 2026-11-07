@@ -5,7 +5,7 @@ from . import views, review_views
 app_name = "conferences"
 
 urlpatterns = [
-    path("", views.dashboard, name="dashboard"),
+    path("legacy/", views.dashboard, name="dashboard"),
     path("conferences/", views.conference_list, name="conference_list"),
     path("conferences/export.csv", views.export_conferences_csv, name="export_csv"),
     path("conferences/new/", views.conference_create, name="conference_create"),

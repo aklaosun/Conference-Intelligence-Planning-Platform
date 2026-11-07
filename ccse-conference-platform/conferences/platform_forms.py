@@ -1,7 +1,24 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from .planning_models import ConferencePlan,BudgetLine,OutcomeReport,SelectionCriterion,CriterionRating
 from .access_models import ROLE_CHOICES
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['first_name','last_name','email']
+    def clean_email(self):
+        email=self.cleaned_data['email'].strip().lower()
+        if email and User.objects.filter(email__iexact=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Another account already uses this email.')
+        return email
+
+
+class InvitationAcceptForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields=['username','first_name','last_name']
 
 class PlanForm(forms.ModelForm):
     class Meta:

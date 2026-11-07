@@ -4,8 +4,15 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
-ROLE_CHOICES=[('viewer','Viewer'),('contributor','Contributor'),('coordinator','Coordinator')]
-ROLE_GROUPS={'viewer':'Viewers','contributor':'Contributors','coordinator':'Coordinators'}
+ROLE_CHOICES=[('viewer','Viewer'),('contributor','Contributor'),('coordinator','Coordinator'),('administrator','Administrator')]
+ROLE_GROUPS={'viewer':'Viewers','contributor':'Contributors','coordinator':'Coordinators','administrator':'Administrators'}
+
+THEME_CHOICES=[('ksu','Kennesaw gold and black'),('light','Light'),('dark','Dark'),('midnight','Midnight')]
+
+
+class UserPreference(models.Model):
+    user=models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='workspace_preference')
+    theme=models.CharField(max_length=12,choices=THEME_CHOICES,default='ksu')
 
 class AccessInvitation(models.Model):
     email=models.EmailField()
