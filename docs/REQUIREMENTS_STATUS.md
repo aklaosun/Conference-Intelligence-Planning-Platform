@@ -1,6 +1,6 @@
 # Project-plan alignment
 
-Based on `Project_Plan_P26_T1.docx`, reviewed October 31, 2026. Assigned roles are not used to restrict implementation. This is an integrated prototype with additional planning features, not a claim of final project acceptance.
+Based on `Project_Plan_P26_T1.docx`, updated November 6, 2026. Assigned roles are not used to restrict implementation. This is an integrated prototype with additional planning features, not a claim of final project acceptance.
 
 | Requirement | Current implementation / evidence | Remaining work |
 | --- | --- | --- |
@@ -8,22 +8,26 @@ Based on `Project_Plan_P26_T1.docx`, reviewed October 31, 2026. Assigned roles a
 | Catalog and yearly history | Search/filter, conference/edition edits, source evidence, statuses, historical deadlines and prices | Broader multi-edition acceptance dataset |
 | AI extraction and validation | Gemini, bounded official-page fetching, evidence validation, missing-field handling, change detection and staged suggestions | Sponsor evaluation of extraction accuracy across representative sites |
 | Human Approve / Correct / Reject | Integrated evidence workbench; editable scalar/child rows; conflict decisions; atomic save; retained original response and reviewer audit | Sponsor acceptance walkthrough |
-| Integrated frontend/backend | React/Vite served by Django; Electron Windows client; bundled local Python service; independent per-user data | Shared hosting deferred by user choice; macOS/Linux packaging |
-| Access roles | Administrator, Viewer, Contributor and Coordinator; one-time, expiring/revocable invitations; server-enforced permissions; local-only automatic demo owner | Shared-account onboarding only after a shared host is chosen |
-| Planning lifecycle | Configurable planning-stage table; edition owners, objectives and notes | Sponsor confirmation of workflow/status vocabulary and attendance authorization policy |
-| Itemized costs | Registration/travel/lodging/other; estimated/actual amounts; source URLs; preserved unknowns; separate currency totals; inactive history | Sponsor budget rules and any approved currency conversion policy |
-| Selection framework | Configurable center criteria/weights, explicit approval flag, source-backed 1–5 ratings; no score until all approved criteria are rated | Actual sponsor criteria, weight calibration and approval governance |
-| Post-conference outcomes | Summary, counts, follow-ups, completed flag; report CSV includes actual cost-per-attendee/contact only when computable | Sponsor confirmation of outcome definitions and long-term history workflow |
-| Deadline reminders | Dashboard upcoming window; upcoming/overdue/history views; source timezones and AoE retained; dated follow-ups | Per-user delivery preferences and exact timezone-aware notification scheduling |
+| Integrated frontend/backend | Authenticated browser app served by Django with a dedicated local launcher and database; Electron 0.3.1 retained as a separate distribution | Shared hosting remains deferred by user choice; local browser users share one database on this computer only; hosted PostgreSQL validation and macOS/Linux packaging remain pending |
+| Access roles | Administrator, Viewer, Contributor and Coordinator; server-enforced permissions; single-use expiring/revocable invitations; names, personal profile/password/theme settings; root/self-account protections; one private bootstrap administrator | Local invitation acceptance and all four roles tested; external onboarding needs the deferred shared host; no real team accounts created without recipient details |
+| Planning lifecycle | Configurable planning-stage table; edition owners, objectives and notes | Jacob confirmed the current planning statuses on November 2; retain human attendance authorization and verify against final acceptance criteria |
+| Itemized costs | Registration/travel/lodging/other; estimated/actual amounts; source URLs; preserved unknowns; separate currency totals; inactive history | Jacob confirmed registration fees are the required cost scope on November 2; other categories remain optional, with no currency conversion policy inferred |
+| Selection framework | Configurable center criteria/weights, explicit approval flag, source-backed 1–5 ratings; no score until all approved criteria are rated | Jacob confirmed criteria and weights in Ayo’s Milestone 1 Criteria and Functional Requirements document; obtain that exact document, enter the approved configuration, and verify calculations |
+| Post-conference outcomes | Summary, counts, follow-ups, completed flag; report CSV includes actual cost-per-attendee/contact only when computable | Jacob considers current outcomes sufficient for M2; structured responsible-person/center/attend-again fields are optional candidates pending final requirement prioritization |
+| Deadline reminders | In-app Alerts center and bell badge; 30-day deadline/follow-up feed with overdue/urgent states; personal persistent read status; role-scoped AI review reminders; source timezones and AoE retained | Per-user delivery preferences, email/OS delivery, and exact timezone-aware notification scheduling remain pending; current reminders use calendar dates while the app is open |
 | Reporting | Catalog CSV and planning/outcome CSV, known subtotals and missing counts; opt-in weekly email command with delivery records | SMTP/approved recipients/scheduler intentionally disabled in local demos |
 | Discovery / monitoring | Existing bounded companion-page research and refresh command stage changes for human review | Autonomous discovery scope, configured schedules and operational monitoring |
 | Normalized storage | Conference/edition, deadline/price, plans, budgets, criteria/ratings, outcomes, roles and access tables | Center flags/themes still use the existing boolean/JSON contract; migration to center/theme relationships remains pending |
 | Testing / handoff | Existing extraction/review/import regression suite plus workspace auth/planning/report/local-bootstrap tests; desktop setup guide | Final acceptance tests, usability/accessibility review and live PostgreSQL validation |
 
-## Acceptance conditions still requiring the sponsor
+## Remaining acceptance evidence and configuration
 
-Obtain the actual RED/acceptance checklist, confirmed CAC/CDSA evaluation criteria and weights, definitions of a successful outcome, data verification rules, and a decision on shared access after the local demonstrations. These inputs are not inferred from developer assignments or invented to make a checklist appear complete.
+Obtain the actual RED/acceptance checklist and Ayo’s approved criteria/weights document, configure and verify those values, finish data verification and final acceptance testing, and choose shared hosting later. Jacob’s November 2 confirmations settle the planning statuses, registration-cost scope, and M2 outcome sufficiency. This update does not reopen those confirmed sponsor decisions.
 
 ## New data structures
 
 `PlanningStage` configures workflow vocabulary. `ConferencePlan` is one per edition and records owner/objectives/notes. `BudgetLine` stores a currency and nullable decimal estimated/actual values; removed lines remain inactive. `SelectionCriterion` is scoped to CAC, CDSA or CCSE, with nullable weight and explicit approval. `CriterionRating` is unique per edition/criterion and records a rating and rationale. `OutcomeReport` is one per edition. `ActivityEvent` records workspace changes. `AccessInvitation` stores only the invitation token hash. `ReportSubscription` is disabled unless explicitly configured; `ReportDelivery` records the reporting week and sent time.
+
+## Browser appearance and account validation
+
+Four appearance themes are implemented: Kennesaw gold and black, light, dark, and midnight. Preferences persist per user; anonymous choices persist on the browser. The application shell, sign-in, account/member screens, embedded evidence review, and legacy edit pages use the palettes. The new role is a workspace administrator and does not grant Django system-admin access. Hosting, email scheduling, PostgreSQL acceptance, center/theme normalization, and sponsor acceptance remain separate outstanding work.

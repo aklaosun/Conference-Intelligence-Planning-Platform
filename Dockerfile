@@ -3,6 +3,7 @@ WORKDIR /source/client
 COPY client/package.json client/package-lock.json ./
 RUN npm ci --ignore-scripts --no-audit --no-fund
 COPY client/ ./
+COPY ccse-conference-platform/conferences/static/conferences/ /source/ccse-conference-platform/conferences/static/conferences/
 RUN npm run build
 
 FROM python:3.12-slim

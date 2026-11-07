@@ -11,3 +11,15 @@
 .git
 work
 outputs
+.web-data
+.test-temp
+.desktop-build-venv
+desktop-backend/build
+desktop-backend/dist
+qa
+.vscode
+deploy/.env
+deploy/.env.*
+**/admin-login.json
+**/backend.env
+**/django-secret.txt

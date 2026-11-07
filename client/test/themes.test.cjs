@@ -1,0 +1,8 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+function luminance(hex){const rgb=hex.replace('#','').match(/../g).map(n=>parseInt(n,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]}
+function contrast(a,b){const x=luminance(a),y=luminance(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+test('four distinct themes include KSU and reject unknown stored values',async()=>{const{themes,normalizeTheme}=await import('../src/themes.ts');assert.deepEqual(themes.map(t=>t.id),['ksu','light','dark','midnight']);assert.equal(normalizeTheme('malformed'),'ksu');assert.equal(normalizeTheme('midnight'),'midnight');assert(themes[0].swatches.includes('#ffc629'))});
+test('theme text links and button labels have readable contrast',async()=>{const{themes}=await import('../src/themes.ts');for(const t of themes){for(const[a,b,name]of[[t.text,t.bg,'text'],[t.muted,t.bg,'secondary text'],[t.accent,t.bg,'links'],[t.onFill,t.fill,'button labels']])assert(contrast(a,b)>=4.5,`${t.id} ${name}: ${contrast(a,b).toFixed(2)}`)}});
+test('shared browser and embedded palettes retain matching theme tokens',async()=>{const{themes}=await import('../src/themes.ts');const css=fs.readFileSync(require('node:path').join(__dirname,'../../ccse-conference-platform/conferences/static/conferences/theme-palette.css'),'utf8');for(const t of themes){assert(css.includes(`data-theme=${t.id}`));assert(css.includes(`--bg:${t.bg}`));assert(css.includes(`--text:${t.text}`));assert(css.includes(`--muted:${t.muted}`));}});

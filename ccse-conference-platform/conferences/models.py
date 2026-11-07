@@ -131,4 +131,5 @@ class ExtractionCandidate(models.Model):
 
 # Domain modules keep the core conference and extraction contracts stable.
 from .planning_models import (PlanningStage,ConferencePlan,BudgetLine,OutcomeReport,SelectionCriterion,CriterionRating,ActivityEvent,ReportSubscription,ReportDelivery)
-from .access_models import AccessInvitation,LoginThrottle
+from .access_models import AccessInvitation,LoginThrottle,UserPreference
+from .alert_service import AlertReadState
