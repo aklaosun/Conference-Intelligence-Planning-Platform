@@ -175,8 +175,8 @@ def edition_data(e):
         'source_url':e.source_url,'last_verified_at':e.last_verified_at,'deadlines':deadlines,'prices':prices,
         'legacy_sources':e.field_sources.get('legacy_imports',[]),'planning_status':plan.stage.name if plan else 'Not planned'}
 def conference_data(c):
-    return {'id':c.pk,'name':c.name,'organizer':c.organizer,'website':c.website,'themes':c.themes,
-        'audience':c.target_audience,'centers':[name for name,flag in [('CAC',c.cac_relevant),('CDSA',c.cdsa_relevant)] if flag],
+    return {'id':c.pk,'name':c.name,'organizer':c.organizer,'website':c.website,'themes':c.theme_names,
+        'audience':c.target_audience,'centers':c.center_codes,
         'editions':[edition_data(e) for e in c.editions.all()]}
 def editions_query():
     return ConferenceEdition.objects.select_related('conference','plan__stage').prefetch_related('deadlines','registration_prices')
@@ -234,14 +234,14 @@ def alerts(request):
 def catalog(request):
     from .views import filtered_conferences
     _,query=filtered_conferences(request.GET)
-    page=Paginator(query.prefetch_related('editions__deadlines','editions__registration_prices','editions__plan__stage'),12).get_page(request.GET.get('page'))
+    page=Paginator(query.prefetch_related('centers','themes','editions__deadlines','editions__registration_prices','editions__plan__stage'),12).get_page(request.GET.get('page'))
     return JsonResponse({'count':page.paginator.count,'pages':page.paginator.num_pages,'page':page.number,
         'results':[conference_data(c) for c in page],'years':list(ConferenceEdition.objects.order_by('-year').values_list('year',flat=True).distinct())})
 
 @api
 @require_GET
 def detail(request,pk):
-    c=get_object_or_404(Conference.objects.prefetch_related('editions__deadlines','editions__registration_prices','editions__plan__stage'),pk=pk)
+    c=get_object_or_404(Conference.objects.prefetch_related('centers','themes','editions__deadlines','editions__registration_prices','editions__plan__stage'),pk=pk)
     return JsonResponse(conference_data(c))
 
 

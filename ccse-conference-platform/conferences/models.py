@@ -21,19 +21,99 @@ class AttendanceFormat(models.TextChoices):
     HYBRID = "hybrid", "Hybrid"
 
 
+def theme_key(name):
+    return " ".join(str(name).split()).casefold()
+
+
+class CenterManager(models.Manager):
+    def get_by_natural_key(self, code):
+        return self.get(code=code)
+
+
+class Center(models.Model):
+    code = models.CharField(max_length=8, unique=True)
+    name = models.CharField(max_length=120)
+
+    objects = CenterManager()
+
+    class Meta:
+        ordering = ["code"]
+
+    def natural_key(self):
+        return (self.code,)
+
+    def __str__(self):
+        return self.code
+
+
+class ThemeManager(models.Manager):
+    def get_by_natural_key(self, key):
+        return self.get(key=key)
+
+    def for_names(self, names):
+        themes = {}
+        for name in names or []:
+            label = " ".join(str(name).split())
+            if not label or theme_key(label) in themes:
+                continue
+            theme, _ = self.get_or_create(key=theme_key(label), defaults={"name": label[:120]})
+            themes[theme.key] = theme
+        return list(themes.values())
+
+
+class Theme(models.Model):
+    name = models.CharField(max_length=120)
+    key = models.CharField(max_length=120, unique=True, editable=False)
+
+    objects = ThemeManager()
+
+    class Meta:
+        ordering = ["name"]
+
+    def save(self, *args, **kwargs):
+        self.name = " ".join(self.name.split())
+        self.key = theme_key(self.name)
+        super().save(*args, **kwargs)
+
+    def natural_key(self):
+        return (self.key,)
+
+    def __str__(self):
+        return self.name
+
+
 class Conference(models.Model):
     name = models.CharField(max_length=255, unique=True)
     organizer = models.CharField(max_length=255, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    themes = models.JSONField(default=list, blank=True)
     target_audience = models.JSONField(default=list, blank=True)
-    cac_relevant = models.BooleanField(default=False)
-    cdsa_relevant = models.BooleanField(default=False)
+    centers = models.ManyToManyField(Center, blank=True, related_name="conferences")
+    themes = models.ManyToManyField(Theme, blank=True, related_name="conferences")
     field_sources = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def center_codes(self):
+        return [center.code for center in self.centers.all()]
+
+    @property
+    def theme_names(self):
+        return [theme.name for theme in self.themes.all()]
+
+    def has_center(self, code):
+        return code in self.center_codes
+
+    def add_centers(self, *codes):
+        self.centers.add(*Center.objects.filter(code__in=codes))
+
+    def set_centers(self, codes):
+        self.centers.set(Center.objects.filter(code__in=codes))
+
+    def set_themes(self, names):
+        self.themes.set(Theme.objects.for_names(names))
 
 
 class ConferenceEdition(models.Model):
