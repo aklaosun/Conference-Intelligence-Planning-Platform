@@ -9,7 +9,7 @@ DEBUG=False
 SECRET_KEY=os.environ.get('DJANGO_SECRET_KEY','')
 if len(SECRET_KEY)<50 or SECRET_KEY.startswith('django-insecure-'):
     raise ImproperlyConfigured('Set a private DJANGO_SECRET_KEY of at least 50 characters.')
-PUBLIC_BASE_URL=os.environ.get('PUBLIC_BASE_URL','').rstrip('/')
+PUBLIC_BASE_URL=(os.environ.get('PUBLIC_BASE_URL') or os.environ.get('RENDER_EXTERNAL_URL','')).rstrip('/')
 public=urlsplit(PUBLIC_BASE_URL)
 if public.scheme!='https' or not public.hostname or public.username or public.password or public.path or public.query or public.fragment:
     raise ImproperlyConfigured('PUBLIC_BASE_URL must be your HTTPS server origin, without a path or credentials.')
@@ -18,10 +18,11 @@ if '*' in ALLOWED_HOSTS:raise ImproperlyConfigured('Wildcard ALLOWED_HOSTS are n
 CSRF_TRUSTED_ORIGINS=[PUBLIC_BASE_URL]
 database=os.environ.get('DATABASE_URL','')
 if not database:raise ImproperlyConfigured('Configure a persistent PostgreSQL DATABASE_URL.')
-DATABASES={'default':dj_database_url.parse(database,conn_max_age=60,conn_health_checks=True,
+DATABASES={'default':dj_database_url.parse(database,conn_max_age=0,conn_health_checks=True,
     ssl_require=os.environ.get('DATABASE_SSL_REQUIRE','1')=='1')}
 if DATABASES['default']['ENGINE']!='django.db.backends.postgresql':
     raise ImproperlyConfigured('Shared workspaces require PostgreSQL; local SQLite is only for development.')
+DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS']=True
 MIDDLEWARE.insert(MIDDLEWARE.index('django.middleware.security.SecurityMiddleware')+1,'whitenoise.middleware.WhiteNoiseMiddleware')
 STATIC_URL='/static/'
 STATIC_ROOT=BASE_DIR/'staticfiles'
@@ -32,13 +33,20 @@ CSRF_COOKIE_SECURE=True
 SESSION_COOKIE_HTTPONLY=True
 SESSION_COOKIE_SAMESITE='Lax'
 SECURE_SSL_REDIRECT=True
+SECURE_REDIRECT_EXEMPT=[r'^health/$']
 SECURE_HSTS_SECONDS=3600
 SECURE_CONTENT_TYPE_NOSNIFF=True
 SECURE_REFERRER_POLICY='same-origin'
 if os.environ.get('DJANGO_TRUST_PROXY','0')=='1':
     SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO','https')
 DATA_UPLOAD_MAX_MEMORY_SIZE=2_000_000
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PROVIDER=os.environ.get('EMAIL_PROVIDER','smtp')
+if EMAIL_PROVIDER not in ('smtp','brevo'):
+    raise ImproperlyConfigured('EMAIL_PROVIDER must be smtp or brevo.')
+EMAIL_BACKEND=('conferences.email_backend.BrevoEmailBackend' if EMAIL_PROVIDER=='brevo'
+    else 'django.core.mail.backends.smtp.EmailBackend')
+BREVO_API_KEY=os.environ.get('BREVO_API_KEY','')
+REPORT_JOB_TOKEN=os.environ.get('REPORT_JOB_TOKEN','')
 EMAIL_HOST=os.environ.get('EMAIL_HOST','')
 EMAIL_PORT=int(os.environ.get('EMAIL_PORT','587'))
 EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER','')

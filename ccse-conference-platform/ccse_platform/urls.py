@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
 from conferences import ai_views, platform_api
 
 urlpatterns = [
+    path("", RedirectView.as_view(url="/app/",permanent=False)),
     path("app/", platform_api.application, name="workspace"),
     path("health/", platform_api.health),
     path("api/platform/", include("conferences.platform_urls")),

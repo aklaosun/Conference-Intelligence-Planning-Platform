@@ -137,10 +137,12 @@ class WorkspaceTests(TestCase):
         invitation,token=AccessInvitation.issue(email='x@example.org',role='viewer',user=self.owner)
         invitation.expires_at=timezone.now()-timezone.timedelta(seconds=1);invitation.save()
         self.assertEqual(Client().get(f'/api/platform/invitations/{token}/').status_code,410)
-    def test_admin_cannot_disable_itself_or_grant_administrator_via_role_input(self):
+    def test_admin_cannot_disable_itself_and_workspace_admin_is_not_superuser(self):
         self.client.force_login(self.owner)
         self.assertEqual(self.post('team/',{'action':'active','id':self.owner.pk,'active':False}).status_code,400)
-        self.assertEqual(self.post('team/',{'action':'role','id':self.viewer.pk,'role':'administrator'}).status_code,400)
+        self.assertEqual(self.post('team/',{'action':'role','id':self.viewer.pk,'role':'administrator'}).status_code,200)
+        self.viewer.refresh_from_db();self.assertFalse(self.viewer.is_superuser);self.assertFalse(self.viewer.is_staff)
+        self.assertTrue(self.viewer.groups.filter(name='Administrators').exists())
         self.owner.refresh_from_db();self.assertTrue(self.owner.is_active)
 
     def test_review_can_embed_only_on_the_same_origin(self):

@@ -1,5 +1,20 @@
 # Packaged demo validation — October 31, 2026
 
+## Browser workspace update November 6 2026
+
+The 0.4.0 update runs as a local authenticated browser application. Its validation is separate from the earlier packaged Windows executable checks below; no 0.4.0 Electron installer was built or claimed tested.
+
+- 217 Django tests passed, including 18 web-account/setup tests and the existing 13 alert tests. No missing migrations were detected.
+- Six Node client checks and TypeScript validation passed. Theme checks cover all four palettes, invalid saved values, shared palette tokens, and primary text/link/button contrast of at least 4.5 to 1.
+- The production React build completed with browser assets included in source.
+- Six live HTTP acceptance groups passed on an isolated QA database: authenticated real catalog loading; all four saved themes; invitation acceptance and permissions for Viewer/Contributor/Coordinator/Administrator; personal preference isolation and immediate role/deactivation enforcement; workspace admin protection without Django system-admin access; and existing alerts/reports/export/evidence review.
+- Browser inspection verified KSU/light/dark/midnight appearance, account settings, people/role guidance, mobile navigation, a 390-pixel viewport without horizontal page overflow, conference search returning AWS re:Invent, saved midnight appearance after reload, and themed embedded evidence review.
+- The actual local workspace initializes 35 real conferences and one private administrator. QA users exist only in a separate QA database. Existing Downloads/desktop databases, configuration, and release files were not modified.
+
+Start the local app with `Start-WebApp.ps1` and use `http://127.0.0.1:8020/app/`. Private initial credentials are written only to `.web-data/admin-login.json`; set your own password under My account. Invitation links work on this computer until a shared host is chosen. Email, exact-time scheduled notifications, PostgreSQL validation, center/theme relationship normalization, approved criteria configuration, and final sponsor acceptance remain outstanding. Local administrator Gemini configuration is private; a new live provider extraction was not run for this web update.
+
+## Earlier Windows distribution validation
+
 Result: ready for a Windows x64 local prototype walkthrough on the tested machine.
 
 The exact portable executable was launched from a fresh isolated profile, exercised over HTTP against its bundled backend, closed through the application window, and relaunched. The project launcher and extracted-folder build were also started from a separate fresh profile.
@@ -30,3 +45,9 @@ Use the Windows ZIP for repeat demonstrations: extract all files and open the ex
 Live Gemini extraction succeeded using the existing private key in an isolated QA profile. The key was cleared from that disposable profile after testing and was never included in the release. Each recipient supplies their own key for live extraction. Normal catalog, planning, saved evidence review and reporting do not require a key.
 
 These checks cover this Windows x64 environment. Recipients should perform a quick first launch on their own computers before presenting. The separate local demos do not synchronize. Sponsor criteria/weights, final acceptance and other project-plan gaps remain documented in REQUIREMENTS_STATUS.md. The optional installer executable was built earlier; this acceptance run validates the portable and extracted-folder distributions, not a system installation/uninstallation cycle.
+
+## November 2 alert update 0.3.1
+
+199 Django tests and the client checks pass. Five compiled-backend checks verified migration and real catalog loading, React alert assets, overdue/today/soon/30-day reminders, persistent personal read status, and removal of completed follow-up alerts. A native Windows walkthrough verified the dashboard summary, bell, Alerts page, and read/unread controls with the real catalog. The real 35-conference catalog remained intact; synthetic reminder records were created only in an isolated QA profile and are not part of the distribution.
+
+Alerts refresh while the app is open, use calendar dates, and preserve source timezone labels. Email, operating-system delivery, and exact timezone-aware scheduling are not included. The updated portable executable is packaged from the same validated folder; its unpack-and-launch cycle was not separately rerun in this update.

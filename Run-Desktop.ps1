@@ -1,6 +1,7 @@
 param([string]$ServerUrl='')
 $ErrorActionPreference='Stop'
-$portable=Join-Path $PSScriptRoot 'client\release\CCSE-Workspace-Portable-0.3.0-x64.exe'
+$version=(Get-Content -LiteralPath (Join-Path $PSScriptRoot 'client\package.json') -Raw | ConvertFrom-Json).version
+$portable=Join-Path $PSScriptRoot "client\release\CCSE-Workspace-Portable-$version-x64.exe"
 $folderApp=Join-Path $PSScriptRoot 'client\release\win-unpacked\CCSE Conference Workspace.exe'
 $previousServer=$env:CCSE_SERVER_URL
 $previousLocal=$env:CCSE_LOCAL_DEMO

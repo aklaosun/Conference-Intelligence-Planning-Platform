@@ -1,6 +1,9 @@
 from django.urls import path
 from . import platform_api as api
+from . import connection_views
 urlpatterns=[
+    path('connections/',connection_views.connections),
+    path('scheduled-reports/',connection_views.scheduled_reports),
     path('session/',api.session),path('login/',api.sign_in),path('logout/',api.sign_out),
     path('overview/',api.overview),path('catalog/',api.catalog),path('catalog/<int:pk>/',api.detail),
     path('plans/',api.plans),path('plans/<int:pk>/',api.plan),path('outcomes/<int:pk>/',api.outcome),
@@ -8,4 +11,6 @@ urlpatterns=[
     path('reports/',api.reports),path('team/',api.team),path('invitations/<str:token>/',api.invitation),
     path('reports/export/',api.export_planning),path('subscriptions/',api.subscriptions),
     path('desktop-bootstrap/',api.desktop_bootstrap),path('local-settings/',api.local_settings),
+    path('alerts/',api.alerts),
+    path('account/',api.account),
 ]

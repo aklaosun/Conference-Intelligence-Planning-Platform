@@ -26,6 +26,9 @@ services:
       DJANGO_TRUST_PROXY: "1"
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash-lite}
+      SEED_REAL_CATALOG: "1"
+      BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL:?Set the initial administrator email}
+      BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:?Set a strong initial administrator password}
     depends_on:
       database:
         condition: service_healthy

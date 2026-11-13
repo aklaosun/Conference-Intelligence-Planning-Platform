@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 
 REVIEWERS = "Reviewers"
 EDITORS = "Editors"
+ADMINISTRATORS = "Administrators"
 
 
 def in_group(user, *names):
@@ -14,11 +15,15 @@ def in_group(user, *names):
 
 
 def can_review(user):
-    return in_group(user, REVIEWERS, "Coordinators")
+    return in_group(user, REVIEWERS, "Coordinators", ADMINISTRATORS)
 
 
 def can_edit(user):
-    return in_group(user, EDITORS, REVIEWERS, "Coordinators")
+    return in_group(user, EDITORS, REVIEWERS, "Coordinators", ADMINISTRATORS)
+
+
+def can_manage_workspace(user):
+    return in_group(user, ADMINISTRATORS)
 
 
 def _require(check):
