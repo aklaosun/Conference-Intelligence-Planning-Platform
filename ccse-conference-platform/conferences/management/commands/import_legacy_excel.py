@@ -296,22 +296,18 @@ class Command(BaseCommand):
                 name=name,
                 organizer=(str(get("organizer")).strip()[:255] if not blank(get("organizer")) else None),
                 website=website,
-                themes=parse_list(get("themes")),
                 target_audience=parse_list(get("audience")),
-                cac_relevant=cac,
-                cdsa_relevant=cdsa,
             )
+            conference.set_themes(parse_list(get("themes")))
             stats["conferences_created"] += 1
         else:
             changed = False
-            if cac and not conference.cac_relevant:
-                conference.cac_relevant = changed = True
-            if cdsa and not conference.cdsa_relevant:
-                conference.cdsa_relevant = changed = True
             if website and not conference.website:
                 conference.website, changed = website, True
             if changed:
                 conference.save()
+
+        conference.add_centers(*[code for code, wanted in (("CAC", cac), ("CDSA", cdsa)) if wanted])
 
         if ConferenceEdition.objects.filter(conference=conference, year=year).exists():
             stats["editions_skipped"] += 1

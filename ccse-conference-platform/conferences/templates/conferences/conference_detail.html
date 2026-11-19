@@ -7,9 +7,8 @@
     <div class="text-muted">{{ conference.organizer|default:"" }}</div>
     {% if conference.website %}<a href="{{ conference.website }}" target="_blank" rel="noopener">{{ conference.website }}</a>{% endif %}
     <div class="mt-2">
-      {% if conference.cac_relevant %}<span class="badge text-bg-info">CAC</span>{% endif %}
-      {% if conference.cdsa_relevant %}<span class="badge text-bg-primary">CDSA</span>{% endif %}
-      {% for t in conference.themes %}<span class="badge text-bg-light border">{{ t }}</span>{% endfor %}
+      {% for center in conference.centers.all %}<span class="badge text-bg-info">{{ center.code }}</span>{% endfor %}
+      {% for t in conference.themes.all %}<span class="badge text-bg-light border">{{ t.name }}</span>{% endfor %}
     </div>
   </div>
   {% if can_edit %}

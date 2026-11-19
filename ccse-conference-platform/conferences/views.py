@@ -71,15 +71,15 @@ def filtered_conferences(params):
                 Q(name__icontains=q)
                 | Q(organizer__icontains=q)
                 | Q(editions__location__icontains=q)
-                | Q(themes__icontains=q)
+                | Q(themes__name__icontains=q)
             )
         center = data["center"]
         if center == "cac":
-            conferences = conferences.filter(cac_relevant=True)
+            conferences = conferences.filter(centers__code="CAC")
         elif center == "cdsa":
-            conferences = conferences.filter(cdsa_relevant=True)
+            conferences = conferences.filter(centers__code="CDSA")
         elif center == "both":
-            conferences = conferences.filter(cac_relevant=True, cdsa_relevant=True)
+            conferences = conferences.filter(centers__code="CAC").filter(centers__code="CDSA")
 
         edition_filter = Q()
         if data["year"]:
@@ -98,6 +98,7 @@ def filtered_conferences(params):
     conferences = (
         conferences.distinct()
         .annotate(edition_total=Count("editions", distinct=True))
+        .prefetch_related("centers", "themes")
         .order_by("name")
     )
     return form, conferences
@@ -196,6 +197,7 @@ def export_conferences_csv(request):
     editions = (
         ConferenceEdition.objects.filter(conference__in=conferences)
         .select_related("conference")
+        .prefetch_related("conference__centers", "conference__themes")
         .annotate(next_deadline=Min("deadlines__date", filter=Q(deadlines__is_active=True)))
         .order_by("conference__name", "-year")
     )
@@ -213,8 +215,8 @@ def export_conferences_csv(request):
         sources = e.field_sources.get("legacy_imports", [])
         source = sources[-1] if sources else {}
         writer.writerow([
-            c.name, c.organizer or "", c.website or "", "Yes" if c.cac_relevant else "No",
-            "Yes" if c.cdsa_relevant else "No", "; ".join(c.themes or []), e.year,
+            c.name, c.organizer or "", c.website or "", "Yes" if c.has_center("CAC") else "No",
+            "Yes" if c.has_center("CDSA") else "No", "; ".join(c.theme_names), e.year,
             e.start_date or "", e.end_date or "", e.location or "",
             e.get_attendance_format_display() if e.attendance_format else "",
             e.get_information_status_display(), e.get_verification_status_display(),

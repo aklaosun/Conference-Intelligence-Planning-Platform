@@ -10,6 +10,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from .models import (
+    Center,
     Conference,
     ConferenceEdition,
     Deadline,
@@ -218,9 +219,14 @@ class IngestionApiTests(TestCase):
 class ConferencePageTests(RoleSetupMixin, TestCase):
     def setUp(self):
         super().setUp()
-        self.ai = Conference.objects.create(name="AI Summit", organizer="ACM", cac_relevant=True, themes=["AI"])
-        self.data = Conference.objects.create(name="Data Days", cdsa_relevant=True, themes=["Analytics"])
-        self.both = Conference.objects.create(name="Joint Forum", cac_relevant=True, cdsa_relevant=True)
+        self.ai = Conference.objects.create(name="AI Summit", organizer="ACM")
+        self.ai.add_centers("CAC")
+        self.ai.set_themes(["AI"])
+        self.data = Conference.objects.create(name="Data Days")
+        self.data.add_centers("CDSA")
+        self.data.set_themes(["Analytics"])
+        self.both = Conference.objects.create(name="Joint Forum")
+        self.both.add_centers("CAC", "CDSA")
         future = datetime.date.today() + datetime.timedelta(days=90)
         self.ai_edition = ConferenceEdition.objects.create(
             conference=self.ai, year=future.year, start_date=future, location="Chicago, IL",
@@ -294,12 +300,13 @@ class ConferencePageTests(RoleSetupMixin, TestCase):
         self.client.force_login(self.editor)
         response = self.client.post(reverse("conferences:conference_edit", args=[self.ai.pk]), {
             "name": "AI Summit", "organizer": "IEEE", "website": "", "themes": "AI, ML",
-            "target_audience": "", "cac_relevant": "on",
+            "target_audience": "", "centers": [Center.objects.get(code="CAC").pk],
         })
         self.assertEqual(response.status_code, 302)
         self.ai.refresh_from_db()
         self.assertEqual(self.ai.organizer, "IEEE")
-        self.assertEqual(self.ai.themes, ["AI", "ML"])
+        self.assertEqual(sorted(self.ai.theme_names), ["AI", "ML"])
+        self.assertEqual(self.ai.center_codes, ["CAC"])
 
     def _edition_post(self, **extra):
         data = {
@@ -361,7 +368,7 @@ class LegacyImportTests(TestCase):
         out = self.run_import(self.CSV)
         self.assertEqual(Conference.objects.count(), 2)
         ghc = Conference.objects.get(name="Grace Hopper Celebration")
-        self.assertTrue(ghc.cac_relevant and ghc.cdsa_relevant)
+        self.assertEqual(sorted(ghc.center_codes), ["CAC", "CDSA"])
         self.assertEqual(ghc.website, "https://ghc.anitab.org")
         self.assertEqual(sorted(ghc.editions.values_list("year", flat=True)), [2025, 2026])
 
