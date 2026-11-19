@@ -1,19 +1,85 @@
 [
 {
+  "model": "conferences.theme",
+  "fields": {
+    "name": "Technology",
+    "key": "technology"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "Financial Technology",
+    "key": "financial technology"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "Industry",
+    "key": "industry"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "Cybersecurity",
+    "key": "cybersecurity"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "National Academic Conference with Industry Focus",
+    "key": "national academic conference with industry focus"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "Major Industry-Focused Tech Conferences",
+    "key": "major industry-focused tech conferences"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "Atlanta-Specific Conferences & Events",
+    "key": "atlanta-specific conferences & events"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "GA TECH CONFERENCES",
+    "key": "ga tech conferences"
+  }
+},
+{
+  "model": "conferences.theme",
+  "fields": {
+    "name": "Technology, Artificial Intelligence",
+    "key": "technology, artificial intelligence"
+  }
+},
+{
   "model": "conferences.conference",
   "pk": 1,
   "fields": {
     "name": "23rd ACM International Conference on Computing Frontiers (CF'26)",
     "organizer": "ACM",
     "website": "https://www.computingfrontiers.org/2026/",
-    "themes": [],
     "target_audience": [
       "researchers",
       "engineers",
       "computer scientists"
     ],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [],
     "field_sources": {
       "organizer": {
         "source_id": "source_1",
@@ -47,12 +113,17 @@
     "name": "QUANTUM TECH",
     "organizer": null,
     "website": "https://www.alphaevents.com/events-quantumtechus",
-    "themes": [
-      "Technology"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "technology"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.811Z"
   }
@@ -64,12 +135,17 @@
     "name": "FINCON",
     "organizer": null,
     "website": "https://finconexpo.com/",
-    "themes": [
-      "Financial Technology"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "financial technology"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.813Z"
   }
@@ -81,12 +157,17 @@
     "name": "ATLANTA CYBERSECURITY CONFERENCE",
     "organizer": null,
     "website": "https://www.sharedaudiences.com/events/atlanta-cybersecurity-summit-fall-2026",
-    "themes": [
-      "Technology"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "technology"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.814Z"
   }
@@ -98,12 +179,17 @@
     "name": "FINTECH SOUTH",
     "organizer": null,
     "website": "https://www.fintechsouth.com/home",
-    "themes": [
-      "Industry"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "industry"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.815Z"
   }
@@ -115,12 +201,17 @@
     "name": "LEVEL ZERO OT CYBERSECURITY",
     "organizer": null,
     "website": "https://levelzeroconference.com/",
-    "themes": [
-      "Cybersecurity"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "cybersecurity"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.815Z"
   }
@@ -132,10 +223,13 @@
     "name": "IEEE CONFRENCE ON PERVASIVE COMPUTING AND COMMUNICATIONS",
     "organizer": null,
     "website": "https://percom.org/",
-    "themes": [],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.817Z"
   }
@@ -147,10 +241,13 @@
     "name": "ATLANTA CYBERSECURITY SUMMIT",
     "organizer": null,
     "website": "https://cyberriskalliance.swoogo.com/atlanta-2026",
-    "themes": [],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.818Z"
   }
@@ -162,10 +259,13 @@
     "name": "USENIX Annual Technical Conference",
     "organizer": null,
     "website": "https://www.usenix.org/conference/atc25",
-    "themes": [],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.818Z"
   }
@@ -177,10 +277,13 @@
     "name": "Nuerips 2026 (Conference on Neural Information Processing Systems)",
     "organizer": null,
     "website": "https://neurips.cc/",
-    "themes": [],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.819Z"
   }
@@ -192,12 +295,17 @@
     "name": "ACM/SIGAPP Symposium on Applied Computing",
     "organizer": null,
     "website": "https://www.sigapp.org/sac/sac2026/",
-    "themes": [
-      "National Academic Conference with Industry Focus"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "national academic conference with industry focus"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.820Z"
   }
@@ -209,12 +317,17 @@
     "name": "CASCON",
     "organizer": null,
     "website": "https://conf.researchr.org/home/cascon-2025",
-    "themes": [
-      "National Academic Conference with Industry Focus"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "national academic conference with industry focus"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.820Z"
   }
@@ -226,12 +339,17 @@
     "name": "The World Congress in Computer Science, Computer Engineering, & Applied Computing (CSCE)",
     "organizer": null,
     "website": "http://sam.udmercy.edu/sam26/CSCE.html",
-    "themes": [
-      "National Academic Conference with Industry Focus"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "national academic conference with industry focus"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.821Z"
   }
@@ -243,12 +361,17 @@
     "name": "IEEE SWEBOK Summit",
     "organizer": null,
     "website": "https://conf.researchr.org/home/icse-2026/swebok-2026",
-    "themes": [
-      "National Academic Conference with Industry Focus"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "national academic conference with industry focus"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.822Z"
   }
@@ -260,12 +383,17 @@
     "name": "SIAM Conference on Computational Science and Engineering (CSE)",
     "organizer": null,
     "website": "https://www.siam.org/conferences-events/siam-conferences/cse27/",
-    "themes": [
-      "National Academic Conference with Industry Focus"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "national academic conference with industry focus"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.822Z"
   }
@@ -277,12 +405,17 @@
     "name": "AWS re:Invent",
     "organizer": null,
     "website": "https://reinvent.awsevents.com/",
-    "themes": [
-      "Major Industry-Focused Tech Conferences"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "major industry-focused tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.823Z"
   }
@@ -294,12 +427,17 @@
     "name": "Consumer Technology Association (CES)",
     "organizer": null,
     "website": "https://www.ces.tech/attend/registration-notification/",
-    "themes": [
-      "Major Industry-Focused Tech Conferences"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "major industry-focused tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.824Z"
   }
@@ -311,12 +449,17 @@
     "name": "AI & Big Data Expo",
     "organizer": null,
     "website": "https://www.ai-expo.net/",
-    "themes": [
-      "Major Industry-Focused Tech Conferences"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "major industry-focused tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.824Z"
   }
@@ -328,12 +471,17 @@
     "name": "Black Hat USA",
     "organizer": null,
     "website": "https://blackhat.com/upcoming.html",
-    "themes": [
-      "Major Industry-Focused Tech Conferences"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "major industry-focused tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.825Z"
   }
@@ -345,12 +493,17 @@
     "name": "Google Cloud Next",
     "organizer": null,
     "website": "https://www.googlecloudevents.com/next-vegas",
-    "themes": [
-      "Major Industry-Focused Tech Conferences"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "major industry-focused tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.826Z"
   }
@@ -362,12 +515,17 @@
     "name": "Venture Atlanta",
     "organizer": null,
     "website": "https://www.ventureatlanta.org/event-overview/",
-    "themes": [
-      "Atlanta-Specific Conferences & Events"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "atlanta-specific conferences & events"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.827Z"
   }
@@ -379,12 +537,17 @@
     "name": "Atlanta Tech Week",
     "organizer": null,
     "website": "https://www.atl.tech/",
-    "themes": [
-      "Atlanta-Specific Conferences & Events"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "atlanta-specific conferences & events"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.827Z"
   }
@@ -396,12 +559,17 @@
     "name": "Atlanta Technology Professionals (ATP)",
     "organizer": null,
     "website": "https://atpconnect.org/atlanta-events/",
-    "themes": [
-      "Atlanta-Specific Conferences & Events"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "atlanta-specific conferences & events"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.828Z"
   }
@@ -413,12 +581,17 @@
     "name": "Career, Research, and Innovation Development Conference",
     "organizer": null,
     "website": "https://calendar.gatech.edu/event/2026/01/29/career-research-and-innovation-development-conference-2026",
-    "themes": [
-      "Atlanta-Specific Conferences & Events"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "atlanta-specific conferences & events"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.829Z"
   }
@@ -430,12 +603,17 @@
     "name": "ITS World Congress (when in Atlanta)",
     "organizer": null,
     "website": "https://www.itsamericaevents.com/world-congress/en-us.html",
-    "themes": [
-      "Atlanta-Specific Conferences & Events"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "atlanta-specific conferences & events"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.830Z"
   }
@@ -447,12 +625,17 @@
     "name": "Masters Conference",
     "organizer": null,
     "website": "https://www.masterslegalconference.com/",
-    "themes": [
-      "Atlanta-Specific Conferences & Events"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "atlanta-specific conferences & events"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.830Z"
   }
@@ -464,12 +647,17 @@
     "name": "Sustainablity Showcase",
     "organizer": null,
     "website": "https://sustainablesystems.gatech.edu/engagement/showcase",
-    "themes": [
-      "GA TECH CONFERENCES"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "ga tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.831Z"
   }
@@ -481,12 +669,17 @@
     "name": "Functional Neuroimaging Frontiers Symposium",
     "organizer": null,
     "website": "https://neuro.gatech.edu/functional-neuroimaging-frontiers-symposium",
-    "themes": [
-      "GA TECH CONFERENCES"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "ga tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.832Z"
   }
@@ -498,12 +691,17 @@
     "name": "Southeastern Energy Conference",
     "organizer": null,
     "website": "https://energyexpo.gatech.edu/",
-    "themes": [
-      "GA TECH CONFERENCES"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "ga tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.833Z"
   }
@@ -515,12 +713,17 @@
     "name": "Healthcare Diagnostics Launchpad",
     "organizer": null,
     "website": "https://www.eventbrite.com/e/healthcare-diagnostics-launchpad-atlanta-innovation-showcase-tickets-1899811349889?aff=ebdssbdestsearch",
-    "themes": [
-      "GA TECH CONFERENCES"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "ga tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.834Z"
   }
@@ -532,12 +735,17 @@
     "name": "Marketing Innovation Conference",
     "organizer": null,
     "website": "https://www.scheller.gatech.edu/events/2026/marketing-innovation-conference.html",
-    "themes": [
-      "GA TECH CONFERENCES"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "ga tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.835Z"
   }
@@ -549,12 +757,17 @@
     "name": "AI & Future of Finance Conference",
     "organizer": null,
     "website": "https://www.scheller.gatech.edu/events/ai-future-of-finance-conference/index.html",
-    "themes": [
-      "GA TECH CONFERENCES"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "ga tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.836Z"
   }
@@ -566,12 +779,17 @@
     "name": "Protective Relaying Conderence",
     "organizer": null,
     "website": "https://pe.gatech.edu/protective-relaying-conference",
-    "themes": [
-      "GA TECH CONFERENCES"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "ga tech conferences"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.837Z"
   }
@@ -583,12 +801,17 @@
     "name": "Atlanta AI Conference for Leaders",
     "organizer": null,
     "website": "https://www.joinaiweek.com/atlanta",
-    "themes": [
-      "Technology, Artificial Intelligence"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "technology, artificial intelligence"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.837Z"
   }
@@ -600,12 +823,17 @@
     "name": "Networking & Ecosystem Spotlight presented by TAG Data Science & AI Society",
     "organizer": null,
     "website": "https://members.tagonline.org/calendar/Details/welcome-to-the-atl-ai-community-networking-ecosystem-spotlight-presented-by-tag-data-science-ai-society-1755285?sourceTypeId=Hub",
-    "themes": [
-      "Technology, Artificial Intelligence"
-    ],
     "target_audience": [],
-    "cac_relevant": true,
-    "cdsa_relevant": false,
+    "centers": [
+      [
+        "CAC"
+      ]
+    ],
+    "themes": [
+      [
+        "technology, artificial intelligence"
+      ]
+    ],
     "field_sources": {},
     "created_at": "2026-10-31T14:34:12.838Z"
   }

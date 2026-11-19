@@ -183,13 +183,13 @@ def import_workbook(path, *, dry_run=False):
                 raise ValueError(f"Row {source['row']}: multiple existing conferences match; resolve before import.")
             c=matches[0] if matches else None
             if c is None:
-                c=Conference.objects.create(name=record['name'],website=record['url'],cac_relevant=True,
-                    themes=[record['category']] if record['category'] else [])
+                c=Conference.objects.create(name=record['name'],website=record['url'])
+                c.add_centers('CAC')
+                c.set_themes([record['category']] if record['category'] else [])
                 conferences.append(c)
                 report['conferences_created']+=1
-            elif not c.cac_relevant:
-                c.cac_relevant=True
-                c.save(update_fields=['cac_relevant'])
+            else:
+                c.add_centers('CAC')
             edition,created=ConferenceEdition.objects.get_or_create(conference=c,year=record['year'],defaults={
                 'start_date':record['start'],'end_date':record['end'],'location':record['location'],
                 'attendance_format':record['format'],'source_url':record['url'],

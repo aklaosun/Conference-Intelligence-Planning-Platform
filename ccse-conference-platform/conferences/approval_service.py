@@ -66,14 +66,20 @@ def approve_candidate(candidate, edited_fields=None, reviewer="", *, decision=No
                 "evidence":original.get("evidence"), "reviewed_by":reviewer[:128],
                 "reviewer_corrected":name in explicit,
             }
+        reviewed_themes = None
         for name in CONFERENCE_FIELDS:
             new = values.get(name)
             if name in explicit or new not in (None,"",[]):
-                setattr(conference,name,new if name not in ("themes","target_audience") else new or [])
+                if name == "themes":
+                    reviewed_themes = new or []
+                else:
+                    setattr(conference,name,new if name != "target_audience" else new or [])
                 conference.field_sources[name] = metadata(name)
         if not conference.website:
             conference.website = locked.requested_url
         conference.save()
+        if reviewed_themes is not None:
+            conference.set_themes(reviewed_themes)
         edition, created = ConferenceEdition.objects.get_or_create(conference=conference,year=values["year"])
         edition = ConferenceEdition.objects.select_for_update().get(pk=edition.pk)
         for name in EDITION_FIELDS:

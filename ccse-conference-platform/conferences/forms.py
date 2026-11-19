@@ -3,6 +3,7 @@ from django.forms import inlineformset_factory
 
 from .models import (
     AttendanceFormat,
+    Center,
     Conference,
     ConferenceEdition,
     Deadline,
@@ -38,7 +39,7 @@ class BootstrapMixin:
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             widget = field.widget
-            if isinstance(widget, forms.CheckboxInput):
+            if isinstance(widget, (forms.CheckboxInput, forms.CheckboxSelectMultiple)):
                 widget.attrs.setdefault("class", "form-check-input")
             elif isinstance(widget, forms.Select):
                 widget.attrs.setdefault("class", "form-select")
@@ -49,11 +50,24 @@ class BootstrapMixin:
 class ConferenceForm(BootstrapMixin, forms.ModelForm):
     themes = ListField(required=False, help_text="Separate with commas")
     target_audience = ListField(required=False, help_text="Separate with commas")
+    centers = forms.ModelMultipleChoiceField(
+        queryset=Center.objects.all(), required=False, widget=forms.CheckboxSelectMultiple,
+        label="Relevant centers",
+    )
+    field_order = ["name", "organizer", "website", "themes", "target_audience", "centers"]
 
     class Meta:
         model = Conference
-        fields = ["name", "organizer", "website", "themes", "target_audience", "cac_relevant", "cdsa_relevant"]
-        labels = {"cac_relevant": "CAC relevant", "cdsa_relevant": "CDSA relevant"}
+        fields = ["name", "organizer", "website", "target_audience", "centers"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.initial.setdefault("themes", self.instance.theme_names)
+
+    def _save_m2m(self):
+        super()._save_m2m()
+        self.instance.set_themes(self.cleaned_data.get("themes") or [])
 
 
 class EditionForm(BootstrapMixin, forms.ModelForm):

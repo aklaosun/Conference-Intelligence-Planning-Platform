@@ -29,8 +29,8 @@
     <tr>
       <td><a href="{% url 'conferences:conference_detail' c.pk %}">{{ c.name }}</a></td>
       <td>{{ c.organizer|default:"" }}</td>
-      <td>{% if c.cac_relevant %}<span class="badge text-bg-info">CAC</span>{% endif %} {% if c.cdsa_relevant %}<span class="badge text-bg-primary">CDSA</span>{% endif %}</td>
-      <td>{{ c.themes|join:", " }}</td>
+      <td>{% for center in c.centers.all %}<span class="badge text-bg-info">{{ center.code }}</span> {% endfor %}</td>
+      <td>{{ c.theme_names|join:", " }}</td>
       <td>{{ c.edition_total }}</td>
     </tr>
   {% empty %}
